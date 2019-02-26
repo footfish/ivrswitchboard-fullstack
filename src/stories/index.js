@@ -10,6 +10,7 @@ import OpeningOptions from '../components/OpeningOptions';
 import MainMenu from '../components/MainMenu';
 import MenuActionWaitDTMF from '../components/MenuActionWaitDTMF'
 import MenuActionPlayback from '../components/MenuActionPlayback'
+import MenuActionNotifyEmail from '../components/MenuActionNotifyEmail'
 
 const WrapCol = ({ children }) => (
   <div class="container pt-5"><div class="row"><div class="col-sm-2 border">
@@ -80,3 +81,7 @@ storiesOf('DayTime', module)
     <MenuActionPlayback settings={playbackData} recordings={recordings} onChange={action('clicked')}/>
     </Container>)
   })
+
+  storiesOf('MenuActionNotifyEmail', module)
+  .add("email ON", () => <Container><MenuActionNotifyEmail notifyState={true} onClick={action('clicked')} /></Container>)
+  .add("email OFF", () => <Container><MenuActionNotifyEmail notifyState={false} onClick={action('clicked')} /></Container>)
