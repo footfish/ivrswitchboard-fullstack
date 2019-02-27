@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlayCircle } from '@fortawesome/free-solid-svg-icons'
+import { faVolumeUp } from '@fortawesome/free-solid-svg-icons'
 
 
 export default class MenuActionPlayback extends React.Component {
@@ -26,7 +26,9 @@ render() {
     <div class="col col-auto">
                 <audio id = "MenuActionPlaybackPlayer" src={this.props.settings.recording} type="audio/mpeg"></audio>
                 <div>
-                <button  type="button" class="btn btn-light btn-sm rounded-circle" onclick="document.getElementById('MenuActionPlaybackPlayer').play()"><span class="text-info"><FontAwesomeIcon icon={faPlayCircle} size="lg"/> </span></button>
+                <button  type="button" class="btn btn-light btn-sm rounded-circle" onclick="document.getElementById('MenuActionPlaybackPlayer').play()">
+                <span class="text-primary"><FontAwesomeIcon icon={faVolumeUp} size="lg"/> </span>
+                </button>
                 </div>
     </div>
     <div class="col col-auto">

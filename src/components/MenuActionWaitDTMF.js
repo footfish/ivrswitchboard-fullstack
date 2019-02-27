@@ -19,7 +19,7 @@ render(){
         const buttonActive = this.props.activeDigits.find(i => i === menuItem) ? true : false
         
         return(
-        <button value={!buttonActive} name={menuItem} type="button" class={buttonActive ? 'ml-1 btn btn-sm btn-info' : 'ml-1 btn btn-sm btn-outline-secondary'    } onClick={this.handleClick} >{menuItem}</button>
+        <button value={!buttonActive} name={menuItem} type="button" class={buttonActive ? 'ml-1 btn btn-sm btn-primary' : 'ml-1 btn btn-sm btn-outline-secondary'    } onClick={this.handleClick} >{menuItem}</button>
         )})}
         </div>
     )

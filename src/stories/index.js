@@ -88,13 +88,44 @@ storiesOf('DayTime', module)
   .add("email OFF", () => <Container><MenuActionNotifyEmail notifyState={false} onClick={action('clicked')} /></Container>)
 
   storiesOf('MenuActionSelect',module)
-  .add("Select 1st", () => { 
-    const menuActionSelectData = { action: 1}
-    return(<Container><MenuActionSelect settings={menuActionSelectData} onChange={action('changed')} onDelete={action('deleted')} /></Container>)
+  .add("PlayRecording", () => { 
+    const recordings=["recording1.wav","recording2.wav","recording3.wav"]
+    const menuActionSelectData = { action: "playRecording", recording:  recordings[1], recordingOptions:  recordings}
+    return(<Container><MenuActionSelect  bullet="none"  settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+})
+.add("ForwardToNumber-empty", () => { 
+  const menuActionSelectData = { action: "forwardToNumber", number: "", ringTimer: 30}
+  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+})
+  .add("ForwardToNumber-valid", () => { 
+    const menuActionSelectData = { action: "forwardToNumber", number: "0861217464", ringTimer: 30}
+    return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+})
+.add("ForwardToNumber-invalid", () => { 
+  const menuActionSelectData = { action: "forwardToNumber", number: "086124", ringTimer: 30}
+  return(<Container><MenuActionSelect  bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+})
+.add("ForwardToNumberWhisper-invalid", () => { 
+  const menuActionSelectData = { action: "forwardToNumberWhisper", number: "086124", ringTimer: 50}
+  return(<Container><MenuActionSelect  bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+})
+.add("ForwardToNumberConfirm-valid", () => { 
+  const menuActionSelectData = { action: "forwardToNumberConfirm", number: "0861217464", ringTimer: 10}
+  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+})
+.add("VoicemailToEmail-empty", () => { 
+  const menuActionSelectData = { action: "voicemailToEmail", email: ""}
+  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+})
+.add("VoicemailToEmail-valid", () => { 
+  const menuActionSelectData = { action: "voicemailToEmail", email: "here@where.com"}
+  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+})
+.add("VoicemailToEmail-invalid", () => { 
+  const menuActionSelectData = { action: "voicemailToEmail", email: "here-where.com"}
+  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
 })
 
-  .add("Select 2nd", () => { 
-    const menuActionSelectData = { action: 2}
-    return(<Container><MenuActionSelect settings={menuActionSelectData} onChange={action('changed')} onDelete={action('deleted')} /></Container>)
-})
+
+
 

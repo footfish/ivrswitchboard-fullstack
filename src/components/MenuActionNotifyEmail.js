@@ -25,3 +25,4 @@ export default class MenuActionNotifyEmail extends React.Component {
             </div>
             )}
 }
+
