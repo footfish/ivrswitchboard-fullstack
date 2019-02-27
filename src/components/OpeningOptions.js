@@ -1,14 +1,14 @@
-import React from 'react';
+import React from 'react'
 
 
 export default class OpeningOptions extends React.Component {
     constructor(props) {
-      super(props);
-      this.handleChange = this.handleChange.bind(this);
+      super(props)
+      this.handleChange = this.handleChange.bind(this)
     }
     
     handleChange(e) {
-        this.props.onChange(e.target.name, e.target.value);
+        this.props.onChange(e.target.name, e.target.value)
       }
 
       //checked={this.props.active}
@@ -31,5 +31,5 @@ const RadioBox = ({label, name, checked, value, onChange}) => (
     <label class="custom-control-label"  style={{textSizeAdjust : '350%'}} for={value}>{label}</label>
     </div>
 
-);
+)
 

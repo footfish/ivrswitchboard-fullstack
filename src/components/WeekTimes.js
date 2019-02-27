@@ -1,15 +1,15 @@
-import DayTimes from './DayTimes';
+import DayTimes from './DayTimes'
 
-import React from 'react';
+import React from 'react'
 
 export default class WeekTimes extends React.Component {
     constructor(props) {
-      super(props);
-      this.handleChange = this.handleChange.bind(this);
+      super(props)
+      this.handleChange = this.handleChange.bind(this)
     }
     
     handleChange(name, value) {
-        this.props.onChange(name, value);
+        this.props.onChange(name, value)
       }
 
      

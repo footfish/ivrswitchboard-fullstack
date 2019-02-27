@@ -13,6 +13,7 @@ handleChange(e) {
     this.props.onChange(e.target.name, e.target.value)
   }
 
+
 render() {
     const timesOptions = ["1 time", "2 times", "3 times"]
     return(<div class="form-row align-items-center">
