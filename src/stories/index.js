@@ -125,6 +125,27 @@ storiesOf('DayTime', module)
   const menuActionSelectData = { action: "voicemailToEmail", email: "here-where.com"}
   return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
 })
+.add("NotifyEmail-empty", () => { 
+  const menuActionSelectData = { action: "notifyEmail", email: "", label: ""}
+  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+})
+.add("NotifyEmail-valid", () => { 
+  const menuActionSelectData = { action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label"}
+  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+})
+.add("NotifyEmail-invalid", () => { 
+  const menuActionSelectData = { action: "notifyEmail", email: "invalid@domain@.co.uk", label: "this-is_not a_valid-label"}
+  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+})
+.add("Analytics-invalid", () => { 
+  const menuActionSelectData = { action: "analytics", label: "this-is_not a_valid-label"}
+  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+})
+.add("backToMenu", () => { 
+  const menuActionSelectData = { action: "backToMenu" }
+  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+})
+
 
 
 

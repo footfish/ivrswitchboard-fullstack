@@ -26,7 +26,7 @@ render(){
                         { value: "forwardToNumberWhisper", label: "Forward to number + whisper"},
                         { value: "forwardToNumberConfirm", label: "Forward to number + confirm"}, 
                         { value: "voicemailToEmail", label: "Voicemail then email to"},
-                        { value: "sendEmail", label:  "Send Notification"}, 
+                        { value: "notifyEmail", label:  "Send email Notification"}, 
                         { value: "analytics", label: "Analytics"}, 
                         { value: "backToMenu", label: "Go back to Greeting"}]
 
@@ -56,6 +56,10 @@ const Action = ({action, settings, onChange}) => {
             return(<ForwardToNumberWhisper settings={settings} onChange={onChange}/>)
         case "voicemailToEmail" :
             return(<VoicemailToEmail settings={settings} onChange={onChange}/>)
+        case "notifyEmail" :
+            return(<NotifyEmail settings={settings} onChange={onChange}/>)
+        case "analytics" :
+            return(<Analytics settings={settings} onChange={onChange}/>)
         default:
             return(<div class="col col-auto"></div>)
     }
@@ -146,6 +150,27 @@ const VoicemailToEmail = ({settings, onChange}) => (
     </div>
 )
 
+const NotifyEmail = ({settings, onChange}) => (
+    <>
+    <div class="col col-auto">
+    <input type="text" class={validateEmail(settings.email) ? "form-control" : "form-control is-invalid"} value={settings.email} name="NotifyEmailEmail" placeholder="Enter an email address" onChange={onChange}/>
+    </div>
+    <div class="col col-auto">
+    <input type="text" class={validateLabel(settings.label) ? "form-control" : "form-control is-invalid"} value={settings.label} name="NotifyEmailLabel" placeholder="Enter a text label" onChange={onChange}/>
+    </div>
+    </>
+)
+
+const Analytics = ({settings, onChange}) => (
+    <div class="col col-auto">
+    <input type="text" class={validateLabel(settings.label) ? "form-control" : "form-control is-invalid"} value={settings.label} name="AnalyticsLabel" placeholder="Enter a text label" onChange={onChange}/>
+    </div>
+)
+
+const validateLabel = label => {
+    const labelPattern = RegExp('^[a-zA-Z0-9_-]{1,50}$');
+        return (labelPattern.test(label))
+}
 
 const validatePhonenumber = number=> {
     const numberPattern = RegExp('^0[1-9][0-9]{7,15}');
