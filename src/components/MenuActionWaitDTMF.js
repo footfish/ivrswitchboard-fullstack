@@ -1,13 +1,13 @@
-import React from 'react';
+import React from 'react'
 
 export default class MenuActionWaitDTMF extends React.Component {
     constructor(props){
         super(props)
-        this.handleClick = this.handleClick.bind(this);
+        this.handleClick = this.handleClick.bind(this)
     }
 
 handleClick(e) {
-    this.props.onClick(e.target.name, e.target.value === "true" ? true : false);
+    this.props.onClick(e.target.name, e.target.value === "true" ? true : false)
   }
 
 render(){

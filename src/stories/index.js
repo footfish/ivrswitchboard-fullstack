@@ -12,6 +12,8 @@ import MenuActionWaitDTMF from '../components/MenuActionWaitDTMF'
 import MenuActionPlayback from '../components/MenuActionPlayback'
 import MenuActionNotifyEmail from '../components/MenuActionNotifyEmail'
 import MenuActionSelect from '../components/MenuActionSelect';
+import MenuActionAddAction from '../components/MenuActionAddAction';
+import MenuActionSequence from '../components/MenuActionSequence'
 
 const WrapCol = ({ children }) => (
   <div class="container pt-5"><div class="row"><div class="col-sm-2 border">
@@ -87,66 +89,77 @@ storiesOf('DayTime', module)
   .add("email ON", () => <Container><MenuActionNotifyEmail notifyState={true} onClick={action('clicked')} /></Container>)
   .add("email OFF", () => <Container><MenuActionNotifyEmail notifyState={false} onClick={action('clicked')} /></Container>)
 
+  storiesOf('MenuActionAddAction',module)
+  .add("Add Action", () => <Container><MenuActionAddAction onClick={action('add')} /></Container>)
+
   storiesOf('MenuActionSelect',module)
   .add("PlayRecording", () => { 
     const recordings=["recording1.wav","recording2.wav","recording3.wav"]
     const menuActionSelectData = { action: "playRecording", recording:  recordings[1], recordingOptions:  recordings}
-    return(<Container><MenuActionSelect  bullet="none"  settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+    return(<Container><MenuActionSelect  index={0}  settings={menuActionSelectData} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
 })
 .add("ForwardToNumber-empty", () => { 
   const menuActionSelectData = { action: "forwardToNumber", number: "", ringTimer: 30}
-  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+  return(<Container><MenuActionSelect index={1} settings={menuActionSelectData} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
 })
   .add("ForwardToNumber-valid", () => { 
     const menuActionSelectData = { action: "forwardToNumber", number: "0861217464", ringTimer: 30}
-    return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+    return(<Container><MenuActionSelect index={1} settings={menuActionSelectData} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
 })
 .add("ForwardToNumber-invalid", () => { 
   const menuActionSelectData = { action: "forwardToNumber", number: "086124", ringTimer: 30}
-  return(<Container><MenuActionSelect  bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+  return(<Container><MenuActionSelect  index={1} settings={menuActionSelectData} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
 })
 .add("ForwardToNumberWhisper-invalid", () => { 
   const menuActionSelectData = { action: "forwardToNumberWhisper", number: "086124", ringTimer: 50}
-  return(<Container><MenuActionSelect  bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+  return(<Container><MenuActionSelect  index={1} settings={menuActionSelectData} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
 })
 .add("ForwardToNumberConfirm-valid", () => { 
   const menuActionSelectData = { action: "forwardToNumberConfirm", number: "0861217464", ringTimer: 10}
-  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+  return(<Container><MenuActionSelect index={1} settings={menuActionSelectData} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
 })
 .add("VoicemailToEmail-empty", () => { 
   const menuActionSelectData = { action: "voicemailToEmail", email: ""}
-  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+  return(<Container><MenuActionSelect index={1} settings={menuActionSelectData} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
 })
 .add("VoicemailToEmail-valid", () => { 
   const menuActionSelectData = { action: "voicemailToEmail", email: "here@where.com"}
-  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+  return(<Container><MenuActionSelect index={1} settings={menuActionSelectData} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
 })
 .add("VoicemailToEmail-invalid", () => { 
   const menuActionSelectData = { action: "voicemailToEmail", email: "here-where.com"}
-  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+  return(<Container><MenuActionSelect index={1} settings={menuActionSelectData} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
 })
 .add("NotifyEmail-empty", () => { 
   const menuActionSelectData = { action: "notifyEmail", email: "", label: ""}
-  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+  return(<Container><MenuActionSelect index={1} settings={menuActionSelectData} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
 })
 .add("NotifyEmail-valid", () => { 
   const menuActionSelectData = { action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label"}
-  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+  return(<Container><MenuActionSelect index={1} settings={menuActionSelectData} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
 })
 .add("NotifyEmail-invalid", () => { 
   const menuActionSelectData = { action: "notifyEmail", email: "invalid@domain@.co.uk", label: "this-is_not a_valid-label"}
-  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+  return(<Container><MenuActionSelect index={1} settings={menuActionSelectData} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
 })
 .add("Analytics-invalid", () => { 
   const menuActionSelectData = { action: "analytics", label: "this-is_not a_valid-label"}
-  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+  return(<Container><MenuActionSelect index={1} settings={menuActionSelectData} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
 })
 .add("backToMenu", () => { 
   const menuActionSelectData = { action: "backToMenu" }
-  return(<Container><MenuActionSelect bullet="delete" settings={menuActionSelectData} onChange={action('changed')} onBulletClick={action('click')} /></Container>)
+  return(<Container><MenuActionSelect index={1} settings={menuActionSelectData} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
 })
 
-
-
+storiesOf('MenuActionSequence', module)
+.add("1st", () => { 
+  const pressed1 = [
+    { action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label"},
+    { action: "forwardToNumber", number: "0861217464", ringTimer: 30},
+    {action: "analytics", label: "my-label"},
+    {action: "backToMenu" }
+  ]
+  return(<Container><MenuActionSequence actionSettingsArray={pressed1}  onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
+})
 
 

@@ -1,24 +1,22 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faVolumeUp } from '@fortawesome/free-solid-svg-icons'
-import { faMinusSquare, faPlusSquare, faSquare } from '@fortawesome/free-regular-svg-icons'
-
+import { faMinusSquare, faSquare } from '@fortawesome/free-regular-svg-icons'
 
 export default class MenuActionSelect extends React.Component {
 constructor(props){
     super(props)
     this.handleChange = this.handleChange.bind(this)
-    this.handleBulletClick = this.handleBulletClick.bind(this)    
+    this.handleDeleteClick = this.handleDeleteClick.bind(this)    
 }
 
 handleChange(e){
-    this.props.onChange(e.target.name, e.target.value)
+    this.props.onChange(this.props.index,e.target.name, e.target.value)
 }
 
-handleBulletClick(){
-    this.props.onBulletClick(this.props.bullet)
+handleDeleteClick(){
+    this.props.onDeleteClick(this.props.index)
 }
-
 
 render(){
     const selectOptions=[{ value: "playRecording", label: "Play Recording"},
@@ -27,12 +25,15 @@ render(){
                         { value: "forwardToNumberConfirm", label: "Forward to number + confirm"}, 
                         { value: "voicemailToEmail", label: "Voicemail then email to"},
                         { value: "notifyEmail", label:  "Send email Notification"}, 
-                        { value: "analytics", label: "Analytics"}, 
+                        { value: "analytics", label: "Graph analytics"}, 
                         { value: "backToMenu", label: "Go back to Greeting"}]
+    
+    
+//    const Action = this.props.settings.action[0].toUpperCase() + this.props.settings.action.substring(1) //convert action string value to component name
 
     return (
-        <div class="form-row align-items-center">
-           <Bullet onClick={this.handleBulletClick} type={this.props.bullet}/>
+        <div class="form-row align-items-center pt-1">
+           <Bullet onClick={this.handleDeleteClick} index={this.props.index}/>
         <div class="col col-auto">
                 <select name="MenuActionSelect" class="form-control" onChange={this.handleChange}>
                 {selectOptions.map( (option) => <option  selected={this.props.settings.action===option.value && true} value={option.value}>{option.label}</option>)}
@@ -66,12 +67,16 @@ const Action = ({action, settings, onChange}) => {
 
 }
 
-const Bullet = ({type="none", onClick}) => {
-    const bulletFont = {add: faPlusSquare, delete: faMinusSquare, none: faSquare}
+const Bullet = ({index, onClick}) => {
+    const bulletFont = [faSquare, faMinusSquare]
+    let bulletState = 1
+    if (index === 0) {
+        bulletState = 0
+        }
             return(
                 <div class="col col-auto">
-                <button onClick={onClick} type="button" class="btn btn-light btn-sm" disabled={type==="none" ? true : false}><span class="text-primary">
-                <FontAwesomeIcon icon={bulletFont[type]} size="lg"/>
+                <button onClick={onClick} type="button" class="btn btn-light btn-sm" disabled={bulletState===0 ? true : false}><span class="text-primary">
+                <FontAwesomeIcon icon={bulletFont[bulletState]} size="lg"/> 
                 </span></button> 
                 </div>
             )
