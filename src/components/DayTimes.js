@@ -18,12 +18,12 @@ export default class DayTimes extends React.Component {
             <div class="custom-control custom-checkbox form-group">
             <input
               name="active"
-              id={this.props.id+"-active"}
+              id={this.props.id+this.props.settings.day+"active"}
               class="custom-control-input"
               type="checkbox"
               checked={this.props.settings.active}
               onChange={this.handleChange} />
-              <label class="text-capitalize custom-control-label" for={this.props.id+"-active"}>{this.props.settings.day}</label>
+              <label class="text-capitalize custom-control-label" for={this.props.id+this.props.settings.day+"active"}>{this.props.settings.day}</label>
               </div>
               { this.props.settings.active === true && 
                 <>

@@ -1,19 +1,20 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import React from 'react';
+import 'bootstrap/dist/css/bootstrap.css'
+import React from 'react'
 
-import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
+import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 
-import DayTimes from '../components/DayTimes';
-import WeekTimes from '../components/WeekTimes';
-import OpeningOptions from '../components/OpeningOptions';
-import MainMenu from '../components/MainMenu';
+import DayTimes from '../components/DayTimes'
+import WeekTimes from '../components/WeekTimes'
+import OpeningOptions from '../components/OpeningOptions'
+import MainMenu from '../components/MainMenu'
 import MenuActionWaitDTMF from '../components/MenuActionWaitDTMF'
 import MenuActionPlayback from '../components/MenuActionPlayback'
 import MenuActionNotifyEmail from '../components/MenuActionNotifyEmail'
-import MenuActionSelect from '../components/MenuActionSelect';
-import MenuActionAddAction from '../components/MenuActionAddAction';
+import MenuActionSelect from '../components/MenuActionSelect'
+import MenuActionAddAction from '../components/MenuActionAddAction'
 import MenuActionSequence from '../components/MenuActionSequence'
+import MenuDigitPressedSection from '../components/MenuDigitPressedSection'
 
 const WrapCol = ({ children }) => (
   <div class="container pt-5"><div class="row"><div class="col-sm-2 border">
@@ -42,7 +43,13 @@ storiesOf('DayTime', module)
         <DayTimes id="work" settings={dayData} onChange={action('clicked')}/>
         </WrapCol>
         )})
-  .add("Monday Inactive", () => <WrapCol><DayTimes id="work-mon" label="Mon" active={false} begin="09:00" end="17:00" onChange={action('clicked')}/></WrapCol>)
+  .add("Tuesday Inactive", () => { 
+    const dayData={day: "tue", active: false, begin: "10:00", end: "18:00"}
+    return(
+        <WrapCol>
+        <DayTimes id="work" settings={dayData} onChange={action('clicked')}/>
+        </WrapCol>
+        )})
   
   storiesOf('WeekTime', module)
 .add("Week Mon-Fri", () => {
@@ -96,7 +103,7 @@ storiesOf('DayTime', module)
   .add("email OFF", () => <Container><MenuActionNotifyEmail notifyState={false} onClick={action('clicked')} /></Container>)
 
   storiesOf('MenuActionAddAction',module)
-  .add("Add Action", () => <Container><MenuActionAddAction onClick={action('add')} /></Container>)
+  .add("Add Action", () => <Container><MenuActionAddAction onAddClick={action('add')} /></Container>)
 
   storiesOf('MenuActionSelect',module)
   .add("PlayRecording", () => { 
@@ -166,6 +173,25 @@ storiesOf('MenuActionSequence', module)
     {action: "backToMenu" }
   ]
   return(<Container><MenuActionSequence actionSettingsArray={pressed1}  onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
+})
+
+storiesOf('MenuDigitPressedSection', module)
+.add("valid - no add-more", () => { 
+  const pressed1 = [
+    { action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label"},
+    { action: "forwardToNumber", number: "0861217464", ringTimer: 30},
+    {action: "analytics", label: "my-label"},
+    {action: "backToMenu" }
+  ]
+  return(<Container><MenuDigitPressedSection label="On '0' Pressed" actionSettingsArray={pressed1}  onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')}/></Container>)
+})
+.add("invalid - add-more", () => { 
+  const pressed1 = [
+    { action: "notifyEmail", email: "valid@dom@ain.co.uk", label: "this-is_an invalid-label"},
+    { action: "forwardToNumber", number: "", ringTimer: 30},
+    {action: "analytics", label: "my-label"}
+  ]
+  return(<Container><MenuDigitPressedSection label="On '1' Pressed" actionSettingsArray={pressed1}  onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')}/></Container>)
 })
 
 
