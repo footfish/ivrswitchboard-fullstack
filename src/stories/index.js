@@ -35,12 +35,18 @@ storiesOf('MainMenu', module)
 .add("Recordings", () => <Container><MainMenu tab="recordings" onClick={action('clicked')}/></Container>)
 
 storiesOf('DayTime', module)
-  .add("Monday Active", () => <WrapCol><DayTimes id="work-mon" label="Mon" active={true} begin="17:00" end="17:00" onChange={action('clicked')}/></WrapCol>)
+  .add("Monday Active", () => { 
+    const dayData={day: "mon", active: true, begin: "09:00", end: "17:00"}
+    return(
+        <WrapCol>
+        <DayTimes id="work" settings={dayData} onChange={action('clicked')}/>
+        </WrapCol>
+        )})
   .add("Monday Inactive", () => <WrapCol><DayTimes id="work-mon" label="Mon" active={false} begin="09:00" end="17:00" onChange={action('clicked')}/></WrapCol>)
   
   storiesOf('WeekTime', module)
 .add("Week Mon-Fri", () => {
-  let schedule=[{day: "mon", active: true, begin: "09:00", end: "17:00"},
+  const schedule=[{day: "mon", active: true, begin: "09:00", end: "17:00"},
                 {day: "tue", active: true, begin: "09:00", end: "17:00"},
                 {day: "wed", active: true, begin: "09:00", end: "17:00"},
                 {day: "thu", active: true, begin: "09:00", end: "17:00"},
