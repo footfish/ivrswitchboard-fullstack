@@ -16,7 +16,7 @@ handleChange(e) {
 
 render() {
     const timesOptions = ["1 time", "2 times", "3 times"]
-    return(<div class="form-row align-items-center">
+    return(<div class="form-row align-items-center pt-1">
     <div class="col col-auto">Playback</div>
     <div class="col col-auto" >
         <select name="MenuActionPlaybackRecording" class="form-control" onChange={this.handleChange}>

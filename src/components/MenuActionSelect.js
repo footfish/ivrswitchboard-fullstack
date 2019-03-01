@@ -29,12 +29,11 @@ render(){
                         { value: "backToMenu", label: "Go back to Greeting"}]
     
     
-//    const Action = this.props.settings.action[0].toUpperCase() + this.props.settings.action.substring(1) //convert action string value to component name
 
     return (
-        <div class="form-row align-items-center pt-1">
+        <div class="form-row align-items-center">
            <Bullet onClick={this.handleDeleteClick} index={this.props.index}/>
-        <div class="col col-auto">
+        <div class="col col-auto py-1">
                 <select name="MenuActionSelect" class="form-control" onChange={this.handleChange}>
                 {selectOptions.map( (option) => <option  selected={this.props.settings.action===option.value && true} value={option.value}>{option.label}</option>)}
                 </select>
