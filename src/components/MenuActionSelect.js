@@ -11,7 +11,7 @@ constructor(props){
 }
 
 handleChange(e){
-    this.props.onChange(this.props.index,e.target.name, e.target.value)
+    this.props.onChange(e.target.name, this.props.index, e.target.value )
 }
 
 handleDeleteClick(){

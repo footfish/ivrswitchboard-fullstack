@@ -1,9 +1,9 @@
 import React from 'react'
-import MenuActionWaitDTMF from '../components/MenuActionWaitDTMF'
-import MenuActionNotifyEmail from '../components/MenuActionNotifyEmail'
-import MenuActionPlayback from '../components/MenuActionPlayback'
+import MenuActionWaitDTMF from './MenuActionWaitDTMF'
+import MenuActionNotifyEmail from './MenuActionNotifyEmail'
+import MenuActionPlayback from './MenuActionPlayback'
 
-const MenuCallRxSection = (props) => {
+const MenuSectionCallRx = (props) => {
 return(
     <div class="card  border-primary rounded-0 border-bottom-0">
     <div class="card-header p-0 border-0 bg-white"><button type="button" class="btn btn-primary rounded-0">On Call Received</button></div>
@@ -20,4 +20,4 @@ return(
 )
 }
 
-export default MenuCallRxSection
+export default MenuSectionCallRx

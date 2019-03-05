@@ -9,7 +9,7 @@ export default class MenuActionNotifyEmail extends React.Component {
     }
 
     handleClick(e) {
-        this.props.onClick(!this.props.notifyState)
+        this.props.onClick("NotifyEmail",!this.props.notifyState)
       }
 
     render() {

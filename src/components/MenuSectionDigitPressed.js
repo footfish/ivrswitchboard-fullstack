@@ -3,7 +3,7 @@ import MenuActionSequence from './MenuActionSequence'
 import MenuActionAddAction from './MenuActionAddAction'
 
 
-const MenuDigitPressedSection = (props) => {
+const MenuSectionDigitPressed = (props) => {
     const addMoreEnabled = {playRecording: true, 
                         forwardToNumber: true,
                         forwardToNumberWhisper: true,
@@ -35,8 +35,8 @@ const MenuDigitPressedSection = (props) => {
         props.onDeleteClick(digitPressed, e)
     }
 
-    const handleChange = ( digitPressed,i, n, v) => {
-        props.onChange( digitPressed,i, n, v)
+    const handleChange = ( digitPressed,n , i, v) => {
+        props.onChange( digitPressed, n, i, v)
     }
 
 
@@ -48,7 +48,7 @@ const MenuDigitPressedSection = (props) => {
             <div class="card-header p-0 border-0 bg-white"><button type="button" class="btn btn-primary rounded-0">{sectionLabel[digitSection.digitPressed]}</button></div>
 
             <ul class="list-group list-group-flush">
-            <MenuActionSequence actionSettingsArray={digitSection.actions}  onChange={ (i,n,v) => handleChange(digitSection.digitPressed,i,n,v) } onDeleteClick={ (i) => handleDeleteClick(digitSection.digitPressed, i )} />
+            <MenuActionSequence actionSettingsArray={digitSection.actions}  onChange={ (n,i,v) => handleChange(digitSection.digitPressed,n,i,v) } onDeleteClick={ (i) => handleDeleteClick(digitSection.digitPressed, i )} />
             </ul>
 
             {addMoreEnabled[lastAction] &&     <li class="list-group-item"><MenuActionAddAction onAddClick={ () => handleAddClick(digitSection.digitPressed)}/></li> }
@@ -58,4 +58,4 @@ const MenuDigitPressedSection = (props) => {
     )
 }
 
-export default MenuDigitPressedSection
+export default MenuSectionDigitPressed

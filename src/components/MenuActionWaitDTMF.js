@@ -7,7 +7,7 @@ export default class MenuActionWaitDTMF extends React.Component {
     }
 
 handleClick(e) {
-    this.props.onClick(e.target.name, e.target.value === "true" ? true : false)
+    this.props.onClick("WaitDTMF", e.target.name, e.target.value === "true" ? true : false)
   }
 
 render(){
