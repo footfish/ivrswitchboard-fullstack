@@ -6,7 +6,7 @@ const MenuActionSequence = props =>
 (<ul class="list-group list-group-flush">
 {props.actionSettingsArray.map( (settings, index) => 
     <li class="list-group-item">
-    <MenuActionSelect index={index} settings={settings} onChange={props.onChange} onDeleteClick={props.onDeleteClick} /></li>
+    <MenuActionSelect index={index} settings={settings} recordingOptions={props.recordingOptions} onChange={props.onChange} onDeleteClick={props.onDeleteClick} /></li>
 )}
     
 </ul>)

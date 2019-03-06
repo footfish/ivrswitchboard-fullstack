@@ -8,11 +8,11 @@ const MenuSectionCallRx = (props) => {
 return(
     <SectionBorder label="On Call Received" borderBottom={false}>
     <li class="list-group-item">
-    <MenuActionNotifyEmail notifyState={props.notifyState} onClick={props.onNotifyClick} />
+    <MenuActionNotifyEmail notifyState={props.menuSettings.emailNotification} onClick={props.onNotifyClick} />
     </li><li class="list-group-item">
-    <MenuActionPlayback settings={props.playbackSettings} recordings={props.playbackRecordings} onChange={props.onChange}/>
+    <MenuActionPlayback settings={props.menuSettings.greeting} recordings={props.playbackRecordings} onChange={props.onChange}/>
     </li><li class="list-group-item">
-    <MenuActionWaitDTMF  activeDigits={props.activeDigits} onClick={props.onDigitClick}/>
+    <MenuActionWaitDTMF  menu={props.menuSettings.menu} onClick={props.onDigitClick}/>
     </li>
     </SectionBorder>
 )

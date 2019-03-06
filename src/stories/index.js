@@ -20,6 +20,71 @@ import TimesSectionWeek from '../components/TimesSectionWeek';
 import AccountHeader from '../components/AccountHeader'
 
 
+const switchboard =  {
+                      id : "123",
+                      number: "084412314555",
+                      routeOption : "scheduled",  //scheduled, alwaysOpen, alwaysClosed
+                      schedule : {
+                        openHours: [  { day: "mon", active: true, begin: "09:00", end: "17:00" },
+                                      { day: "tue", active: true, begin: "09:00", end: "17:00" },
+                                      { day: "wed", active: true, begin: "09:00", end: "17:00" },
+                                      { day: "thu", active: true, begin: "09:00", end: "17:00" },
+                                      { day: "fri", active: true, begin: "09:00", end: "13:00" },
+                                      { day: "sat", active: false, begin: "09:00", end: "17:00" },
+                                      { day: "sun", active: false, begin: "09:00", end: "17:00" }
+                                    ],
+                        lunchHours: [ { day: "mon", active: true, begin: "13:00", end: "14:00" },
+                                      { day: "tue", active: true, begin: "13:00", end: "14:00" },
+                                      { day: "wed", active: true, begin: "13:00", end: "14:00" },
+                                      { day: "thu", active: true, begin: "13:00", end: "14:00" },
+                                      { day: "fri", active: false, begin: "13:00", end: "13:00" },
+                                      { day: "sat", active: false, begin: "09:00", end: "17:00" },
+                                      { day: "sun", active: false, begin: "09:00", end: "17:00" }
+                                    ]
+                      },
+                      openMenu : { 
+                        emailNotification: true,
+                        greeting : { recordingId: 1, times: 1 },
+                        menu : [
+                        {
+                          digitPressed: "zero", //zero, one, two ... nine, hash, star, none 
+                          actions: [  { action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label" },
+                                      { action: "forwardToNumber", number: "0861217464", ringTimer: 30 },
+                                      { action: "analytics", label: "my-label" },
+                                      { action: "backToMenu" }
+                                    ]
+                        },
+                        {
+                          digitPressed: "one",
+                          actions: [  { action: "notifyEmail", email: "valid@dom@ain.co.uk", label: "this-is_an invalid-label" },
+                                      { action: "forwardToNumberConfirm", number: "", ringTimer: 30 },
+                                      { action: "analytics", label: "my-label" }
+                                    ]
+                        },
+                        {
+                          digitPressed: "none",
+                          actions: [{ action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label" },
+                                    { action: "playRecording", recordingId: 1 },
+                                    { action: "forwardToNumber", number: "0861217464", ringTimer: 30 }
+                                  ]
+                        }
+                        ]
+                      },
+                      closedMenu : { 
+                        emailNotification: false,
+                        greeting : { recordingId: 2, times: 1 },
+                        menu : [
+                        {
+                            digitPressed: "none",
+                            actions: [{ action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label" },
+                                      { action: "forwardToNumber", number: "0861217464", ringTimer: 30 }
+                                    ]
+                        }]
+                      },
+                      recordings : ["recording1.wav", "recording2.wav", "recording3.wav"]
+                    }
+
+
 const WrapCol = ({ children }) => (
   <div class="container pt-5"><div class="row"><div class="col-sm-2 border">
     {children}
@@ -81,18 +146,18 @@ storiesOf('2. Times Page', module)
   })
 
 storiesOf('3. Open-Closed Page', module)
-  .add("DTMF odd", () => <Container><MenuActionWaitDTMF activeDigits={["1", "3", "5", "7", "9", "*"]} onClick={action('clicked')} /></Container>)
-  .add("DTMF even", () => <Container><MenuActionWaitDTMF activeDigits={["0", "2", "4", "6", "8", "#"]} onClick={action('clicked')} /></Container>)
+  .add("DTMF open", () => <Container><MenuActionWaitDTMF menu={switchboard.openMenu.menu} onClick={action('clicked')} /></Container>)
+  .add("DTMF closed", () => <Container><MenuActionWaitDTMF menu={switchboard.closedMenu.menu} onClick={action('clicked')} /></Container>)
   .add("1st recording 1 time", () => {
     const recordings = ["recording1.wav", "recording2.wav", "recording3.wav"]
-    const playbackData = { recording: recordings[0], times: 1 }
+    const playbackData = { recordingId: 0, times: 1 }
     return (<Container>
       <MenuActionPlayback settings={playbackData} recordings={recordings} onChange={action('changed')} />
     </Container>)
   })
   .add("2nd recording 3 times", () => {
     const recordings = ["recording1.wav", "recording2.wav", "recording3.wav"]
-    const playbackData = { recording: recordings[1], times: 3 }
+    const playbackData = { recordingId: 1, times: 3 }
     return (<Container>
       <MenuActionPlayback settings={playbackData} recordings={recordings} onChange={action('changed')} />
     </Container>)
@@ -101,9 +166,9 @@ storiesOf('3. Open-Closed Page', module)
   .add("email OFF", () => <Container><MenuActionNotifyEmail notifyState={false} onClick={action('clicked')} /></Container>)
   .add("Add Action", () => <Container><MenuActionAddAction onAddClick={action('add')} /></Container>)
   .add("PlayRecording", () => {
-    const recordings = ["recording1.wav", "recording2.wav", "recording3.wav"]
-    const menuActionSelectData = { action: "playRecording", recording: recordings[1], recordingOptions: recordings }
-    return (<Container><MenuActionSelect index={0} settings={menuActionSelectData} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
+    const recordingOptions = ["recording1.wav", "recording2.wav", "recording3.wav"]
+    const menuActionSelectData = { action: "playRecording", recordingId: 1 }
+    return (<Container><MenuActionSelect index={0} settings={menuActionSelectData} recordingOptions={recordingOptions} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
   })
   .add("ForwardToNumber-empty", () => {
     const menuActionSelectData = { action: "forwardToNumber", number: "", ringTimer: 30 }
@@ -192,57 +257,27 @@ storiesOf('3. Open-Closed Page', module)
 
 
 storiesOf('Full Pages', module)
-  .add("Open", () => {
-    const recordings = ["recording1.wav", "recording2.wav", "recording3.wav"]
-    const playbackData = { recording: recordings[0], times: 1 }
-    const activeDigits = ["0", "1"]
-    const digitSection = [{
-      digitPressed: "zero",
-      actions: [{ action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label" },
-      { action: "forwardToNumber", number: "0861217464", ringTimer: 30 },
-      { action: "analytics", label: "my-label" },
-      { action: "backToMenu" }]
-    },
-    {
-      digitPressed: "one",
-      actions: [{ action: "notifyEmail", email: "valid@dom@ain.co.uk", label: "this-is_an invalid-label" },
-      { action: "forwardToNumber", number: "", ringTimer: 30 },
-      { action: "analytics", label: "my-label" }]
-    }]
-    return (<Container>
-      <AccountHeader swithboardNumber="084412423535"/>
+  .add("Open", () => <Container>
+      <AccountHeader swithboardNumber={switchboard.number}/>
       <MainMenu tab="open" onClick={action('clicked')} />
-      <MenuSectionCallRx playbackSettings={playbackData} playbackRecordings={recordings} notifyState={true} onChange={action('changed')} onNotifyClick={action('clicked')} activeDigits={activeDigits} onDigitClick={action('clicked')} />
-      <MenuSectionDigitPressed digitSectionArray={digitSection} onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')} />
+      <MenuSectionCallRx menuSettings={switchboard.openMenu} playbackRecordings={switchboard.recordings} onChange={action('changed')} onNotifyClick={action('clicked')} onDigitClick={action('clicked')} />
+      <MenuSectionDigitPressed digitSectionArray={switchboard.openMenu.menu} recordingOptions={switchboard.recordings} onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')} />
     </Container>)
-  })
-  .add("Times (scheduled)", () => {
-    const schedule = {
-      openHours: [{ day: "mon", active: true, begin: "09:00", end: "17:00" },
-      { day: "tue", active: true, begin: "09:00", end: "17:00" },
-      { day: "wed", active: true, begin: "09:00", end: "17:00" },
-      { day: "thu", active: true, begin: "09:00", end: "17:00" },
-      { day: "fri", active: true, begin: "09:00", end: "13:00" },
-      { day: "sat", active: false, begin: "09:00", end: "17:00" },
-      { day: "sun", active: false, begin: "09:00", end: "17:00" }],
-      lunchHours: [{ day: "mon", active: true, begin: "13:00", end: "14:00" },
-      { day: "tue", active: true, begin: "13:00", end: "14:00" },
-      { day: "wed", active: true, begin: "13:00", end: "14:00" },
-      { day: "thu", active: true, begin: "13:00", end: "14:00" },
-      { day: "fri", active: false, begin: "13:00", end: "13:00" },
-      { day: "sat", active: false, begin: "09:00", end: "17:00" },
-      { day: "sun", active: false, begin: "09:00", end: "17:00" }]
-    }
-
-    return (<Container>
-      <AccountHeader swithboardNumber="084412423535"/>
+  .add("Closed", () => <Container>
+      <AccountHeader swithboardNumber={switchboard.number}/>
+      <MainMenu tab="closed" onClick={action('clicked')} />
+      <MenuSectionCallRx menuSettings={switchboard.closedMenu} playbackRecordings={switchboard.recordings} onChange={action('changed')} onNotifyClick={action('clicked')} onDigitClick={action('clicked')} />
+      <MenuSectionDigitPressed digitSectionArray={switchboard.closedMenu.menu} recordingOptions={switchboard.recordings} onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')} />
+      </Container>)
+  .add("Times (scheduled)", () => <Container>
+      <AccountHeader swithboardNumber={switchboard.number}/>
       <MainMenu tab="times" onClick={action('clicked')} />
-      <TimesSectionOpeningOptions selected="scheduled" onChange={action('changed')} />
-      <TimesSectionWeek schedule={schedule} onChange={action('changed')} />
+      <TimesSectionOpeningOptions selected={switchboard.routeOption} onChange={action('changed')} />
+      <TimesSectionWeek schedule={switchboard.schedule} onChange={action('changed')} />
     </Container>)
-  })
   .add("Times (open)", () => <Container>
-      <AccountHeader swithboardNumber="084412423535"/><MainMenu tab="times" onClick={action('clicked')} />
+      <AccountHeader swithboardNumber={switchboard.number}/><MainMenu tab="times" onClick={action('clicked')} />
       <TimesSectionOpeningOptions selected="alwaysOpen" onChange={action('changed')} />
       </Container>)
+  
 

@@ -20,11 +20,11 @@ render() {
     <div class="col col-auto">Playback</div>
     <div class="col col-auto" >
         <select name="PlaybackRecording" class="form-control" onChange={this.handleChange}>
-         {this.props.recordings.map( recording => <option selected={this.props.settings.recording===recording && true}>{recording}</option>)}
+         {this.props.recordings.map( (recording, idx) => <option selected={this.props.settings.recordingId===idx && true}>{recording}</option>)}
         </select>
     </div>
     <div class="col col-auto">
-                <audio id = "PlaybackPlayer" src={this.props.settings.recording} type="audio/mpeg"></audio>
+                <audio id = "PlaybackPlayer" src={this.props.recordings[this.props.settings.recordingId]} type="audio/mpeg"></audio>
                 <div>
                 <button  type="button" class="btn btn-light btn-sm rounded-circle" onclick="document.getElementById('PlaybackPlayer').play()">
                 <span class="text-primary"><FontAwesomeIcon icon={faVolumeUp} size="lg"/> </span>

@@ -38,16 +38,16 @@ render(){
                 {selectOptions.map( (option) => <option  selected={this.props.settings.action===option.value && true} value={option.value}>{option.label}</option>)}
                 </select>
         </div>
-        <Action action={this.props.settings.action} settings={this.props.settings} onChange={this.handleChange}/>
+        <Action action={this.props.settings.action} settings={this.props.settings} recordingOptions={this.props.recordingOptions} onChange={this.handleChange}/>
         </div>
     )
 }
 }
 
-const Action = ({action, settings, onChange}) => {
+const Action = ({action, settings, recordingOptions, onChange}) => {
     switch(action){
         case "playRecording": 
-            return(<PlayRecording settings={settings} onChange={onChange}/>)
+            return(<PlayRecording settings={settings} recordingOptions={recordingOptions} onChange={onChange}/>)
         case "forwardToNumber" :
             return(<ForwardToNumber settings={settings} onChange={onChange}/>)
         case "forwardToNumberConfirm" :
@@ -82,17 +82,17 @@ const Bullet = ({index, onClick}) => {
 }
 
 
-const PlayRecording = ({settings, onChange}) => (
+const PlayRecording = ({settings, recordingOptions, onChange}) => (
     <>
     <div class="col col-auto" >
         <select name="PlaybackRecording" class="form-control" onChange={onChange}>
-         {settings.recordingOptions.map( recording => <option selected={settings.recording===recording && true}>{recording}</option>)}
+         {recordingOptions.map( (recording, idx) => <option selected={settings.recordingId===idx && true}>{recording}</option>)}
         </select>
     </div>
 
     <div class="col col-auto">
 
-    <audio id = "PlaybackPlayer" src={settings.recording} type="audio/mpeg"></audio>
+    <audio id = "PlaybackPlayer" src={recordingOptions[settings.recordingId]} type="audio/mpeg"></audio>
         <div>
         <button  type="button" class="btn btn-light btn-sm rounded-circle" onclick="document.getElementById('PlaybackPlayer').play()">
         <span class="text-primary"><FontAwesomeIcon icon={faVolumeUp} size="lg"/></span>
