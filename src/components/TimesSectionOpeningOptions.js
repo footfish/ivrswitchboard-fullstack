@@ -1,4 +1,5 @@
 import React from 'react'
+import SectionBorder from './SectionBorder'
 
 const TimesSectionOpeningOptions = (props) => {
     
@@ -11,12 +12,12 @@ const options = [ {value: "scheduled", label: "Scheduled" },
                   {value: "alwaysClosed", label: "Always Closed"}]
 
 return( 
-            <div class={"card  border-primary rounded-0 "+(props.selected === options[0].value && "border-bottom-0")}>
-                <ul class="list-group list-group-flush">
-                <li class="list-group-item">
+                <SectionBorder label="Routing of your phone number" borderBottom={props.selected !== options[0].value}>
+                <div class="px-3">
                 { options.map( option => <RadioBox label={option.label} name="OpeningOptions" value={option.value} checked={props.selected === option.value}  onChange={handleChange}/> )}
-                </li></ul>
                 </div>
+                </SectionBorder>
+
                 )
 
 }

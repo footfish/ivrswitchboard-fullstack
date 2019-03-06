@@ -29,13 +29,14 @@ export default class MainMenu extends React.Component {
                         activeTip = menuItem.tip
                     }
                     return(
-                        <li class="nav-item  rounded-0">
-                        <a class={ " rounded-0 nav-link " + (this.props.tab === menuItem.tab && "active")} onClick={this.handleClick} href={"#"+menuItem.tab}><FontAwesomeIcon icon={menuItem.icon} size={iconSize} /> <br/>{menuItem.label}</a>
+                        <li class="nav-item">
+                        <a class={ "rounded-0 nav-link " + (this.props.tab === menuItem.tab && "active")} onClick={this.handleClick} href={"#"+menuItem.tab}><FontAwesomeIcon icon={menuItem.icon} size={iconSize} /> <br/>{menuItem.label}</a>
                         </li>
                     )
                 })}
                 </ul>
-                <div class="alert alert-light" role="alert"><FontAwesomeIcon icon={faInfoCircle}/>&nbsp; {activeTip}</div>
+                <div class="alert alert-light" role="alert"><FontAwesomeIcon icon={faInfoCircle}/>&nbsp; {activeTip}
+                </div>
                 </>
               )
           }

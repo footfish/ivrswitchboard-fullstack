@@ -1,6 +1,7 @@
 import React from 'react'
 import MenuActionSequence from './MenuActionSequence'
 import MenuActionAddAction from './MenuActionAddAction'
+import SectionBorder from './SectionBorder'
 
 
 const MenuSectionDigitPressed = (props) => {
@@ -44,15 +45,10 @@ const MenuSectionDigitPressed = (props) => {
         <>{ props.digitSectionArray.map( (digitSection, idx) => {
             let lastAction = digitSection.actions[digitSection.actions.length-1].action
             return(
-            <div class={idx === props.digitSectionArray.length-1 ? "card  border-primary rounded-0" : "card  border-primary rounded-0 border-bottom-0"}>
-            <div class="card-header p-0 border-0 bg-white"><button type="button" class="btn btn-primary rounded-0">{sectionLabel[digitSection.digitPressed]}</button></div>
-
-            <ul class="list-group list-group-flush">
+            <SectionBorder label={sectionLabel[digitSection.digitPressed]} borderBottom={idx === props.digitSectionArray.length-1}>
             <MenuActionSequence actionSettingsArray={digitSection.actions}  onChange={ (n,i,v) => handleChange(digitSection.digitPressed,n,i,v) } onDeleteClick={ (i) => handleDeleteClick(digitSection.digitPressed, i )} />
-            </ul>
-
             {addMoreEnabled[lastAction] &&     <li class="list-group-item"><MenuActionAddAction onAddClick={ () => handleAddClick(digitSection.digitPressed)}/></li> }
-            </div>
+            </SectionBorder>
         )})}</>
    
     )

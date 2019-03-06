@@ -1,4 +1,5 @@
-import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import React from 'react'
 
 import { storiesOf } from '@storybook/react'
@@ -16,6 +17,7 @@ import MenuActionSequence from '../components/MenuActionSequence'
 import MenuSectionDigitPressed from '../components/MenuSectionDigitPressed'
 import MenuSectionCallRx from '../components/MenuSectionCallRx'
 import TimesSectionWeek from '../components/TimesSectionWeek';
+import AccountHeader from '../components/AccountHeader'
 
 
 const WrapCol = ({ children }) => (
@@ -208,6 +210,7 @@ storiesOf('Full Pages', module)
       { action: "analytics", label: "my-label" }]
     }]
     return (<Container>
+      <AccountHeader swithboardNumber="084412423535"/>
       <MainMenu tab="open" onClick={action('clicked')} />
       <MenuSectionCallRx playbackSettings={playbackData} playbackRecordings={recordings} notifyState={true} onChange={action('changed')} onNotifyClick={action('clicked')} activeDigits={activeDigits} onDigitClick={action('clicked')} />
       <MenuSectionDigitPressed digitSectionArray={digitSection} onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')} />
@@ -232,10 +235,14 @@ storiesOf('Full Pages', module)
     }
 
     return (<Container>
+      <AccountHeader swithboardNumber="084412423535"/>
       <MainMenu tab="times" onClick={action('clicked')} />
       <TimesSectionOpeningOptions selected="scheduled" onChange={action('changed')} />
       <TimesSectionWeek schedule={schedule} onChange={action('changed')} />
     </Container>)
   })
-  .add("Times (open)", () => <Container><MainMenu tab="times" onClick={action('clicked')} />  <TimesSectionOpeningOptions selected="alwaysOpen" onChange={action('changed')} /></Container>)
+  .add("Times (open)", () => <Container>
+      <AccountHeader swithboardNumber="084412423535"/><MainMenu tab="times" onClick={action('clicked')} />
+      <TimesSectionOpeningOptions selected="alwaysOpen" onChange={action('changed')} />
+      </Container>)
 
