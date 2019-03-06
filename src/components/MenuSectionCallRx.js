@@ -1,7 +1,7 @@
 import React from 'react'
 import MenuActionWaitDTMF from './MenuActionWaitDTMF'
 import MenuActionNotifyEmail from './MenuActionNotifyEmail'
-import MenuActionPlayback from './MenuActionPlayback'
+import MenuActionGreeting from './MenuActionGreeting'
 import SectionBorder from './SectionBorder'
 
 const MenuSectionCallRx = (props) => {
@@ -10,7 +10,7 @@ return(
     <li class="list-group-item">
     <MenuActionNotifyEmail notifyState={props.menuSettings.emailNotification} onClick={props.onNotifyClick} />
     </li><li class="list-group-item">
-    <MenuActionPlayback settings={props.menuSettings.greeting} recordings={props.playbackRecordings} onChange={props.onChange}/>
+    <MenuActionGreeting settings={props.menuSettings.greeting} recordings={props.playbackRecordings} onChange={props.onChange}/>
     </li><li class="list-group-item">
     <MenuActionWaitDTMF  menu={props.menuSettings.menu} onClick={props.onDigitClick}/>
     </li>

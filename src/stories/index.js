@@ -9,7 +9,7 @@ import DayTimes from '../components/DayTimes'
 import TimesSectionOpeningOptions from '../components/TimesSectionOpeningOptions'
 import MainMenu from '../components/MainMenu'
 import MenuActionWaitDTMF from '../components/MenuActionWaitDTMF'
-import MenuActionPlayback from '../components/MenuActionPlayback'
+import MenuActionGreeting from '../components/MenuActionGreeting'
 import MenuActionNotifyEmail from '../components/MenuActionNotifyEmail'
 import MenuActionSelect from '../components/MenuActionSelect'
 import MenuActionAddAction from '../components/MenuActionAddAction'
@@ -81,7 +81,7 @@ const switchboard =  {
                                     ]
                         }]
                       },
-                      recordings : ["recording1.wav", "recording2.wav", "recording3.wav"]
+                      recordings : [{ label: "Recording 1", src: "recording1.wav"} , { label: "Recording 2", src: "recording2.wav"},  {label: "Recording 3", src: "recording3.wav"}]
                     }
 
 
@@ -149,26 +149,23 @@ storiesOf('3. Open-Closed Page', module)
   .add("DTMF open", () => <Container><MenuActionWaitDTMF menu={switchboard.openMenu.menu} onClick={action('clicked')} /></Container>)
   .add("DTMF closed", () => <Container><MenuActionWaitDTMF menu={switchboard.closedMenu.menu} onClick={action('clicked')} /></Container>)
   .add("1st recording 1 time", () => {
-    const recordings = ["recording1.wav", "recording2.wav", "recording3.wav"]
     const playbackData = { recordingId: 0, times: 1 }
     return (<Container>
-      <MenuActionPlayback settings={playbackData} recordings={recordings} onChange={action('changed')} />
+      <MenuActionGreeting settings={playbackData} recordings={switchboard.recordings} onChange={action('changed')} />
     </Container>)
   })
   .add("2nd recording 3 times", () => {
-    const recordings = ["recording1.wav", "recording2.wav", "recording3.wav"]
     const playbackData = { recordingId: 1, times: 3 }
     return (<Container>
-      <MenuActionPlayback settings={playbackData} recordings={recordings} onChange={action('changed')} />
+      <MenuActionGreeting settings={playbackData} recordings={switchboard.recordings} onChange={action('changed')} />
     </Container>)
   })
   .add("email ON", () => <Container><MenuActionNotifyEmail notifyState={true} onClick={action('clicked')} /></Container>)
   .add("email OFF", () => <Container><MenuActionNotifyEmail notifyState={false} onClick={action('clicked')} /></Container>)
   .add("Add Action", () => <Container><MenuActionAddAction onAddClick={action('add')} /></Container>)
   .add("PlayRecording", () => {
-    const recordingOptions = ["recording1.wav", "recording2.wav", "recording3.wav"]
     const menuActionSelectData = { action: "playRecording", recordingId: 1 }
-    return (<Container><MenuActionSelect index={0} settings={menuActionSelectData} recordingOptions={recordingOptions} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
+    return (<Container><MenuActionSelect index={0} settings={menuActionSelectData} recordingOptions={switchboard.recordings} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
   })
   .add("ForwardToNumber-empty", () => {
     const menuActionSelectData = { action: "forwardToNumber", number: "", ringTimer: 30 }
@@ -232,9 +229,7 @@ storiesOf('3. Open-Closed Page', module)
     return (<Container><MenuActionSequence actionSettingsArray={pressed1} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
   })
   .add("Call Received Section", () => {
-    const recordings = ["recording1.wav", "recording2.wav", "recording3.wav"]
-    const playbackData = { recording: recordings[0], times: 1 }
-    return (<Container><MenuSectionCallRx playbackSettings={playbackData} playbackRecordings={recordings} notifyState={true} onChange={action('changed')} onNotifyClick={action('clicked')} activeDigits={["0", "2", "4", "6", "8", "#"]} onDigitClick={action('clicked')} /></Container>)
+    return (<Container><MenuSectionCallRx menuSettings={switchboard.openMenu} playbackRecordings={switchboard.recordings} onChange={action('changed')} onNotifyClick={action('clicked')} onDigitClick={action('clicked')} /></Container>)
   })
   .add("Digit Pressed Section", () => {
     const digitSection = [{

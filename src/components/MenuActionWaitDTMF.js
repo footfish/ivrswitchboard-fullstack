@@ -1,17 +1,11 @@
 import React from 'react'
 
-export default class MenuActionWaitDTMF extends React.Component {
-    constructor(props){
-        super(props)
-        this.handleClick = this.handleClick.bind(this)
-    }
+const MenuActionWaitDTMF = (props) => {
 
-handleClick(e) {
-    this.props.onClick("WaitDTMF", e.target.name, e.target.value === "true" ? true : false)
-  }
+const handleClick = (e) =>  props.onClick("WaitDTMF", e.target.name, e.target.value === "true" ? true : false)
+  
 
-render(){
-    const menuOptions = [ { value: "zero", label: "0"}, 
+const menuOptions = [ { value: "zero", label: "0"}, 
                         { value: "one", label :"1"},
                         { value: "two", label :"2"},
                         { value: "three", label : "3"},
@@ -30,14 +24,12 @@ render(){
         </div>
         <div class="col col-auto">
         {menuOptions.map( menuOption => { 
-        const buttonActive = this.props.menu.find(i => i.digitPressed === menuOption.value) ? true : false
+        const buttonActive = props.menu.find(i => i.digitPressed === menuOption.value) ? true : false
         return(
-        <button value={!buttonActive} name={menuOption.value} type="button" class={buttonActive ? 'ml-1 btn btn-sm btn-primary' : 'ml-1 btn btn-sm btn-outline-secondary'    } onClick={this.handleClick} >{menuOption.label}</button>
+        <button value={!buttonActive} name={menuOption.value} type="button" class={buttonActive ? 'ml-1 btn btn-sm btn-primary' : 'ml-1 btn btn-sm btn-outline-secondary'    } onClick={handleClick} >{menuOption.label}</button>
         )})}
         </div></div>
     )
 }
 
-
-
-}
+export default MenuActionWaitDTMF

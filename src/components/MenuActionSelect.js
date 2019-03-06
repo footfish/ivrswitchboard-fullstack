@@ -86,13 +86,13 @@ const PlayRecording = ({settings, recordingOptions, onChange}) => (
     <>
     <div class="col col-auto" >
         <select name="PlaybackRecording" class="form-control" onChange={onChange}>
-         {recordingOptions.map( (recording, idx) => <option selected={settings.recordingId===idx && true}>{recording}</option>)}
+         {recordingOptions.map( (recording, idx) => <option selected={settings.recordingId===idx && true}>{recording.label}</option>)}
         </select>
     </div>
 
     <div class="col col-auto">
 
-    <audio id = "PlaybackPlayer" src={recordingOptions[settings.recordingId]} type="audio/mpeg"></audio>
+    <audio id = "PlaybackPlayer" src={recordingOptions[settings.recordingId].src} type="audio/mpeg"></audio>
         <div>
         <button  type="button" class="btn btn-light btn-sm rounded-circle" onclick="document.getElementById('PlaybackPlayer').play()">
         <span class="text-primary"><FontAwesomeIcon icon={faVolumeUp} size="lg"/></span>
