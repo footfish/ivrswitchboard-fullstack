@@ -13,19 +13,19 @@ const MenuSectionDigitPressed = (props) => {
                         notifyEmail: true, 
                         analytics: true, 
                         backToMenu: false}
-    const sectionLabel = { zero: "On '0' Pressed",
-                       one: "On '1' Pressed",
-                       two: "On '2' Pressed",
-                       three: "On '3' Pressed",
-                       four: "On '4' Pressed",
-                       five: "On '5' Pressed",
-                       six: "On '6' Pressed",
-                       seven: "On '7' Pressed",
-                       eight: "On '8' Pressed",
-                       nine: "On '9' Pressed",
-                       hash: "On '#' Pressed",
-                       star: "On '*' Pressed",
-                       none: "When nothing pressed",
+    const sectionLabel = { "0": "On '0' Pressed",
+                       "1": "On '1' Pressed",
+                       "2": "On '2' Pressed",
+                       "3": "On '3' Pressed",
+                       "4": "On '4' Pressed",
+                       "5": "On '5' Pressed",
+                       "6": "On '6' Pressed",
+                       "7": "On '7' Pressed",
+                       "8": "On '8' Pressed",
+                       "9": "On '9' Pressed",
+                       "10": "On '#' Pressed",
+                       "11": "On '*' Pressed",
+                       "none": "When nothing pressed",
 }
 
     const handleAddClick = (digitPressed) => {
@@ -42,12 +42,13 @@ const MenuSectionDigitPressed = (props) => {
 
 
     return(
-        <>{ props.digitSectionArray.map( (digitSection, idx) => {
-            let lastAction = digitSection.actions[digitSection.actions.length-1].action
+        <>{ Object.keys(props.digitMenu).map( (key, idx) => {
+            let menuActions = props.digitMenu[key]
+            let lastAction = menuActions[menuActions.length-1].action
             return(
-            <SectionBorder label={sectionLabel[digitSection.digitPressed]} borderBottom={idx === props.digitSectionArray.length-1}>
-            <MenuActionSequence actionSettingsArray={digitSection.actions} recordingOptions={props.recordingOptions} onChange={ (n,i,v) => handleChange(digitSection.digitPressed,n,i,v) } onDeleteClick={ (i) => handleDeleteClick(digitSection.digitPressed, i )} />
-            {addMoreEnabled[lastAction] &&     <li class="list-group-item"><MenuActionAddAction onAddClick={ () => handleAddClick(digitSection.digitPressed)}/></li> }
+            <SectionBorder label={sectionLabel[key]} borderBottom={idx === Object.keys(props.digitMenu).length-1}>
+            <MenuActionSequence actionSettingsArray={menuActions} recordingOptions={props.recordingOptions} onChange={ (n,i,v) => handleChange(key,n,i,v) } onDeleteClick={ (i) => handleDeleteClick(key, i )} />
+            {addMoreEnabled[lastAction] &&     <li class="list-group-item"><MenuActionAddAction onAddClick={ () => handleAddClick(key)}/></li> }
             </SectionBorder>
         )})}</>
    

@@ -10,9 +10,9 @@ return(
     <li class="list-group-item">
     <MenuActionNotifyEmail notifyState={props.menuSettings.emailNotification} onClick={props.onNotifyClick} />
     </li><li class="list-group-item">
-    <MenuActionGreeting settings={props.menuSettings.greeting} recordings={props.playbackRecordings} onChange={props.onChange}/>
+    <MenuActionGreeting settings={props.menuSettings.greeting} recordingOptions={props.recordingOptions} onChange={props.onGreetingChange}/>
     </li><li class="list-group-item">
-    <MenuActionWaitDTMF  menu={props.menuSettings.menu} onClick={props.onDigitClick}/>
+    <MenuActionWaitDTMF digitMenu={props.menuSettings.menu} onClick={props.onDigitClick}/>
     </li>
     </SectionBorder>
 )

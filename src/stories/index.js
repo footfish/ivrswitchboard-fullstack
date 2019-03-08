@@ -45,43 +45,32 @@ const switchboard =  {
                       openMenu : { 
                         emailNotification: true,
                         greeting : { recordingId: 1, times: 1 },
-                        menu : [
-                        {
-                          digitPressed: "zero", //zero, one, two ... nine, hash, star, none 
-                          actions: [  { action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label" },
-                                      { action: "forwardToNumber", number: "0861217464", ringTimer: 30 },
-                                      { action: "analytics", label: "my-label" },
-                                      { action: "backToMenu" }
-                                    ]
-                        },
-                        {
-                          digitPressed: "one",
-                          actions: [  { action: "notifyEmail", email: "valid@dom@ain.co.uk", label: "this-is_an invalid-label" },
+                        menu : {  //'1', '2', .... '10' (star), '11'(hash), 'none'. 
+                          '1': [ { action: "notifyEmail", email: "valid@dom@ain.co.uk", label: "this-is_an invalid-label" },
                                       { action: "forwardToNumberConfirm", number: "", ringTimer: 30 },
                                       { action: "analytics", label: "my-label" }
-                                    ]
-                        },
-                        {
-                          digitPressed: "none",
-                          actions: [{ action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label" },
+                                    ],
+                          '2': [  { action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label" },
                                     { action: "playRecording", recordingId: 1 },
                                     { action: "forwardToNumber", number: "0861217464", ringTimer: 30 }
-                                  ]
-                        }
-                        ]
+                                  ],
+                          'none': [ { action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label" },
+                                  { action: "forwardToNumber", number: "0861217464", ringTimer: 30 },
+                                  { action: "analytics", label: "my-label" },
+                                  { action: "backToMenu" }
+                                 ]
+                      }
                       },
                       closedMenu : { 
                         emailNotification: false,
                         greeting : { recordingId: 2, times: 1 },
-                        menu : [
-                        {
-                            digitPressed: "none",
-                            actions: [{ action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label" },
+                        menu : {
+                          'none': [ { action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label" },
                                       { action: "forwardToNumber", number: "0861217464", ringTimer: 30 }
                                     ]
-                        }]
+                        }
                       },
-                      recordings : [{ label: "Recording 1", src: "recording1.wav"} , { label: "Recording 2", src: "recording2.wav"},  {label: "Recording 3", src: "recording3.wav"}]
+                      recordings : [{ label: "Recording 1", src: "http://cdn.mos.musicradar.com/audio/samples/dubstep-demo-loops/DS_Fizzer140C-05.mp3"} , { label: "Recording 2", src: "http://cdn.mos.musicradar.com/audio/samples/dubstep-demo-loops/DS_BeatF145-01.mp3"},  {label: "Recording 3", src: "http://cdn.mos.musicradar.com/audio/samples/dubstep-demo-loops/DS_DubPad145G-01.mp3"}]
                     }
 
 
@@ -146,18 +135,18 @@ storiesOf('2. Times Page', module)
   })
 
 storiesOf('3. Open-Closed Page', module)
-  .add("DTMF open", () => <Container><MenuActionWaitDTMF menu={switchboard.openMenu.menu} onClick={action('clicked')} /></Container>)
-  .add("DTMF closed", () => <Container><MenuActionWaitDTMF menu={switchboard.closedMenu.menu} onClick={action('clicked')} /></Container>)
+  .add("DTMF open", () => <Container><MenuActionWaitDTMF digitMenu={switchboard.openMenu.menu} onClick={action('clicked')} /></Container>)
+  .add("DTMF closed", () => <Container><MenuActionWaitDTMF digitMenu={switchboard.closedMenu.menu} onClick={action('clicked')} /></Container>)
   .add("1st recording 1 time", () => {
     const playbackData = { recordingId: 0, times: 1 }
     return (<Container>
-      <MenuActionGreeting settings={playbackData} recordings={switchboard.recordings} onChange={action('changed')} />
+      <MenuActionGreeting settings={playbackData} recordingOptions={switchboard.recordings} onChange={action('changed')} />
     </Container>)
   })
   .add("2nd recording 3 times", () => {
     const playbackData = { recordingId: 1, times: 3 }
     return (<Container>
-      <MenuActionGreeting settings={playbackData} recordings={switchboard.recordings} onChange={action('changed')} />
+      <MenuActionGreeting settings={playbackData} recordingOptions={switchboard.recordings} onChange={action('changed')} />
     </Container>)
   })
   .add("email ON", () => <Container><MenuActionNotifyEmail notifyState={true} onClick={action('clicked')} /></Container>)
@@ -224,29 +213,27 @@ storiesOf('3. Open-Closed Page', module)
       { action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label" },
       { action: "forwardToNumber", number: "0861217464", ringTimer: 30 },
       { action: "analytics", label: "my-label" },
+      { action: "playRecording", recordingId: 1 },
       { action: "backToMenu" }
     ]
-    return (<Container><MenuActionSequence actionSettingsArray={pressed1} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
+    return (<Container><MenuActionSequence actionSettingsArray={pressed1}  recordingOptions={switchboard.recordings} onChange={action('changed')} onDeleteClick={action('delete')} /></Container>)
   })
   .add("Call Received Section", () => {
-    return (<Container><MenuSectionCallRx menuSettings={switchboard.openMenu} playbackRecordings={switchboard.recordings} onChange={action('changed')} onNotifyClick={action('clicked')} onDigitClick={action('clicked')} /></Container>)
+    return (<Container><MenuSectionCallRx menuSettings={switchboard.openMenu} recordingOptions={switchboard.recordings} onGreetingChange={action('changed')} onNotifyClick={action('clicked')} onDigitClick={action('clicked')} /></Container>)
   })
   .add("Digit Pressed Section", () => {
-    const digitSection = [{
-      digitPressed: "zero",
-      actions: [{ action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label" },
-      { action: "forwardToNumber", number: "0861217464", ringTimer: 30 },
-      { action: "analytics", label: "my-label" },
-      { action: "backToMenu" }]
-    },
-    {
-      digitPressed: "one",
-      actions: [{ action: "notifyEmail", email: "valid@dom@ain.co.uk", label: "this-is_an invalid-label" },
-      { action: "forwardToNumber", number: "", ringTimer: 30 },
-      { action: "analytics", label: "my-label" }]
-    }]
+    const digitSection = { "1": [
+                            { action: "notifyEmail", email: "valid@domain.co.uk", label: "this-is_a_valid-label" },
+                            { action: "forwardToNumber", number: "0861217464", ringTimer: 30 },
+                            { action: "analytics", label: "my-label" },
+                            { action: "backToMenu" }] ,
+                           "2": [
+                            { action: "notifyEmail", email: "valid@dom@ain.co.uk", label: "this-is_an invalid-label" },
+                            { action: "forwardToNumber", number: "", ringTimer: 30 },
+                            { action: "analytics", label: "my-label" }]
+                          }
     return (<Container>
-      <MenuSectionDigitPressed digitSectionArray={digitSection} onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')} />
+      <MenuSectionDigitPressed digitMenu={digitSection} recordingOptions={switchboard.recordings} onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')} />
     </Container>)
   })
 
@@ -255,14 +242,14 @@ storiesOf('Full Pages', module)
   .add("Open", () => <Container>
       <AccountHeader swithboardNumber={switchboard.number}/>
       <MainMenu tab="open" onClick={action('clicked')} />
-      <MenuSectionCallRx menuSettings={switchboard.openMenu} playbackRecordings={switchboard.recordings} onChange={action('changed')} onNotifyClick={action('clicked')} onDigitClick={action('clicked')} />
-      <MenuSectionDigitPressed digitSectionArray={switchboard.openMenu.menu} recordingOptions={switchboard.recordings} onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')} />
+      <MenuSectionCallRx menuSettings={switchboard.openMenu} recordingOptions={switchboard.recordings} onGreetingChange={action('changed')} onNotifyClick={action('clicked')} onDigitClick={action('clicked')} />
+      <MenuSectionDigitPressed digitMenu={switchboard.openMenu.menu} recordingOptions={switchboard.recordings} onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')} />
     </Container>)
   .add("Closed", () => <Container>
       <AccountHeader swithboardNumber={switchboard.number}/>
       <MainMenu tab="closed" onClick={action('clicked')} />
-      <MenuSectionCallRx menuSettings={switchboard.closedMenu} playbackRecordings={switchboard.recordings} onChange={action('changed')} onNotifyClick={action('clicked')} onDigitClick={action('clicked')} />
-      <MenuSectionDigitPressed digitSectionArray={switchboard.closedMenu.menu} recordingOptions={switchboard.recordings} onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')} />
+      <MenuSectionCallRx menuSettings={switchboard.closedMenu} recordingOptions={switchboard.recordings} onGreetingChange={action('changed')} onNotifyClick={action('clicked')} onDigitClick={action('clicked')} />
+      <MenuSectionDigitPressed digitMenu={switchboard.closedMenu.menu} recordingOptions={switchboard.recordings} onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')} />
       </Container>)
   .add("Times (scheduled)", () => <Container>
       <AccountHeader swithboardNumber={switchboard.number}/>
