@@ -13,7 +13,7 @@ const options = [ {value: "scheduled", label: "Scheduled" },
 
 return( 
                 <SectionBorder label="Routing of your phone number" borderBottom={props.selected !== options[0].value}>
-                <div class="px-3">
+                <div className="px-3">
                 { options.map( option => <RadioBox label={option.label} name="OpeningOptions" value={option.value} checked={props.selected === option.value}  onChange={handleChange}/> )}
                 </div>
                 </SectionBorder>
@@ -23,9 +23,9 @@ return(
 }
 
 const RadioBox = ({label, name, checked, value, onChange}) => (
-    <div class="custom-control custom-radio custom-control-inline" >
-    <input class="custom-control-input" type="radio" name={name} id={value} value={value} checked={checked} onChange={onChange} />
-    <label class="custom-control-label"  style={{textSizeAdjust : '350%'}} for={value}>{label}</label>
+    <div className="custom-control custom-radio custom-control-inline" >
+    <input className="custom-control-input" type="radio" name={name} key={value} id={value} value={value} checked={checked} onChange={onChange} />
+    <label className="custom-control-label"  style={{textSizeAdjust : '350%'}} for={value}>{label}</label>
     </div>
 
 )

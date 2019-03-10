@@ -11,21 +11,21 @@ const MenuActionGreeting = (props) => {
     
     
     const timesOptions = ["1 time", "2 times", "3 times"]
-    return(<div class="form-row align-items-center pt-1">
-    <div class="col col-auto">Playback</div>
-    <div class="col col-auto" >
-        <select name="recordingId" class="form-control" onChange={handleChange}>
+    return(<div className="form-row align-items-center pt-1">
+    <div className="col col-auto">Playback</div>
+    <div className="col col-auto" >
+        <select name="recordingId" className="form-control" onChange={handleChange}>
          {props.recordingOptions.map( (recording, idx) => <option value={idx} selected={props.settings.recordingId===idx && true}>{recording.label}</option>)}
         </select>
     </div>
-    <div class="col col-auto">
+    <div className="col col-auto">
             <audio ref={audioTag} id="PlaybackPlayer" src={props.recordingOptions[props.settings.recordingId].src} type="audio/mpeg" ></audio>
-            <button  type="button" class="btn btn-light btn-sm rounded-circle" onClick={playSound}>
-            <span class="text-primary"><FontAwesomeIcon icon={faVolumeUp} size="lg"/> </span>
+            <button  type="button" className="btn btn-light btn-sm rounded-circle" onClick={playSound}>
+            <span className="text-primary"><FontAwesomeIcon icon={faVolumeUp} size="lg"/> </span>
             </button>
     </div>
-    <div class="col col-auto">
-                <select name="times" class="form-control" onChange={handleChange}>
+    <div className="col col-auto">
+                <select name="times" className="form-control" onChange={handleChange}>
                 {timesOptions.map( (option, idx) => <option  selected={props.settings.times===(idx+1) && true} value={idx+1}>{option}</option>)}
                 </select>
     </div>

@@ -31,10 +31,10 @@ render(){
     
 
     return (
-        <div class="form-row align-items-center">
+        <div className="form-row align-items-center">
            <Bullet onClick={this.handleDeleteClick} index={this.props.index}/>
-        <div class="col col-auto py-1">
-                <select name="action" class="form-control" onChange={this.handleChange}>
+        <div className="col col-auto py-1">
+                <select name="action" className="form-control" onChange={this.handleChange}>
                 {selectOptions.map( (option) => <option  selected={this.props.settings.action===option.value && true} value={option.value}>{option.label}</option>)}
                 </select>
         </div>
@@ -61,7 +61,7 @@ const Action = ({action, settings, recordingOptions, onChange}) => {
         case "analytics" :
             return(<Analytics settings={settings} onChange={onChange}/>)
         default:
-            return(<div class="col col-auto"></div>)
+            return(<div className="col col-auto"></div>)
     }
 
 }
@@ -73,8 +73,8 @@ const Bullet = ({index, onClick}) => {
         bulletState = 0
         }
             return(
-                <div class="col col-auto">
-                <button onClick={onClick} type="button" class="btn btn-light btn-sm" disabled={bulletState===0 ? true : false}><span class="text-primary">
+                <div className="col col-auto">
+                <button onClick={onClick} type="button" className="btn btn-light btn-sm" disabled={bulletState===0 ? true : false}><span className="text-primary">
                 <FontAwesomeIcon icon={bulletFont[bulletState]} size="lg"/> 
                 </span></button> 
                 </div>
@@ -87,18 +87,18 @@ const PlayRecording = ({settings, recordingOptions, onChange}) => {
     const playSound = () => (audioTag.current.currentTime > 0 && !audioTag.current.paused) ? audioTag.current.pause() : audioTag.current.play()  
     return(
     <>
-    <div class="col col-auto" >
-        <select name="recordingId" class="form-control" onChange={onChange}>
+    <div className="col col-auto" >
+        <select name="recordingId" className="form-control" onChange={onChange}>
          {recordingOptions.map( (recording, idx) => <option value={idx} selected={settings.recordingId===idx && true}>{recording.label}</option>)}
         </select>
     </div>
 
-    <div class="col col-auto">
+    <div className="col col-auto">
 
     <audio ref={audioTag} id="PlaybackPlayer" src={recordingOptions[settings.recordingId].src} type="audio/mpeg"></audio>
         <div>
-        <button  type="button" class="btn btn-light btn-sm rounded-circle" onClick={playSound}>
-        <span class="text-primary"><FontAwesomeIcon icon={faVolumeUp} size="lg"/></span>
+        <button  type="button" className="btn btn-light btn-sm rounded-circle" onClick={playSound}>
+        <span className="text-primary"><FontAwesomeIcon icon={faVolumeUp} size="lg"/></span>
         </button>
         </div>
     </div>
@@ -110,11 +110,11 @@ const ForwardToNumber = ({settings, onChange}) => {
     const secondsOptions = [5,10,15,20,25,30,40,50,60,80,100,120]
     return (
     
-    <><div class="col col-auto">
-    <input type="text" class={validatePhonenumber(settings.number) ? "form-control" : "form-control is-invalid"} value={settings.number} name="number" autocomplete="number" placeholder="Enter a phone number" onChange={onChange}/>
+    <><div className="col col-auto">
+    <input type="text" className={validatePhonenumber(settings.number) ? "form-control" : "form-control is-invalid"} value={settings.number} name="number" autocomplete="number" placeholder="Enter a phone number" onChange={onChange}/>
     </div>
-    <div class="col col-auto">
-        <select name="ringTimer" class="form-control" onChange={onChange}>
+    <div className="col col-auto">
+        <select name="ringTimer" className="form-control" onChange={onChange}>
         {secondsOptions.map( (option) => <option  selected={settings.ringTimer===option?true:false} value={option}>{option+' sec'}</option>)}
         </select>
     </div></>
@@ -125,11 +125,11 @@ const ForwardToNumberWhisper = ({settings, onChange}) => {
     const secondsOptions = [5,10,15,20,25,30,40,50,60,80,100,120]
     return (
     
-    <><div class="col col-auto">
-    <input type="text" class={validatePhonenumber(settings.number) ? "form-control" : "form-control is-invalid"} value={settings.number} name="number"  autocomplete="number" placeholder="Enter a phone number" onChange={onChange}/>
+    <><div className="col col-auto">
+    <input type="text" className={validatePhonenumber(settings.number) ? "form-control" : "form-control is-invalid"} value={settings.number} name="number"  autocomplete="number" placeholder="Enter a phone number" onChange={onChange}/>
     </div>
-    <div class="col col-auto">
-        <select name="ringTimer" class="form-control" onChange={onChange}>
+    <div className="col col-auto">
+        <select name="ringTimer" className="form-control" onChange={onChange}>
         {secondsOptions.map( (option) => <option  selected={settings.ringTimer===option?true:false} value={option}>{option+' sec'}</option>)}
         </select>
     </div></>
@@ -140,11 +140,11 @@ const ForwardToNumberConfirm = ({settings, onChange}) => {
     const secondsOptions = [5,10,15,20,25,30,40,50,60,80,100,120]
     return (
     
-    <><div class="col col-auto">
-    <input type="text" class={validatePhonenumber(settings.number) ? "form-control" : "form-control is-invalid"} value={settings.number} name="number"  autocomplete="number" placeholder="Enter a phone number" onChange={onChange}/>
+    <><div className="col col-auto">
+    <input type="text" className={validatePhonenumber(settings.number) ? "form-control" : "form-control is-invalid"} value={settings.number} name="number"  autocomplete="number" placeholder="Enter a phone number" onChange={onChange}/>
     </div>
-    <div class="col col-auto">
-        <select name="ringTimer" class="form-control" onChange={onChange}>
+    <div className="col col-auto">
+        <select name="ringTimer" className="form-control" onChange={onChange}>
         {secondsOptions.map( (option) => <option  selected={settings.ringTimer===option?true:false} value={option}>{option+' sec'}</option>)}
         </select>
     </div></>
@@ -152,25 +152,25 @@ const ForwardToNumberConfirm = ({settings, onChange}) => {
 )}
 
 const VoicemailToEmail = ({settings, onChange}) => (
-    <div class="col col-auto">
-    <input type="text" class={validateEmail(settings.email) ? "form-control" : "form-control is-invalid"} value={settings.email} name="email" placeholder="Enter an email address" onChange={onChange}/>
+    <div className="col col-auto">
+    <input type="text" className={validateEmail(settings.email) ? "form-control" : "form-control is-invalid"} value={settings.email} name="email" placeholder="Enter an email address" onChange={onChange}/>
     </div>
 )
 
 const NotifyEmail = ({settings, onChange}) => (
     <>
-    <div class="col col-auto">
-    <input type="text" class={validateEmail(settings.email) ? "form-control" : "form-control is-invalid"} value={settings.email} name="email" placeholder="Enter an email address" onChange={onChange}/>
+    <div className="col col-auto">
+    <input type="text" className={validateEmail(settings.email) ? "form-control" : "form-control is-invalid"} value={settings.email} name="email" placeholder="Enter an email address" onChange={onChange}/>
     </div>
-    <div class="col col-auto">
-    <input type="text" class={validateLabel(settings.label) ? "form-control" : "form-control is-invalid"} value={settings.label} name="label" placeholder="Enter a text label" onChange={onChange}/>
+    <div className="col col-auto">
+    <input type="text" className={validateLabel(settings.label) ? "form-control" : "form-control is-invalid"} value={settings.label} name="label" placeholder="Enter a text label" onChange={onChange}/>
     </div>
     </>
 )
 
 const Analytics = ({settings, onChange}) => (
-    <div class="col col-auto">
-    <input type="text" class={validateLabel(settings.label) ? "form-control" : "form-control is-invalid"} value={settings.label} name="label" placeholder="Enter a text label" onChange={onChange}/>
+    <div className="col col-auto">
+    <input type="text" className={validateLabel(settings.label) ? "form-control" : "form-control is-invalid"} value={settings.label} name="label" placeholder="Enter a text label" onChange={onChange}/>
     </div>
 )
 

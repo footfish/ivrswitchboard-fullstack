@@ -18,15 +18,15 @@ const menuOptions = [ { value: "0", label: "0"},
                         { value: "10", label : "#"},
                         { value: "11", label : "*"}]
     return(
-        <div class="form-row align-items-center pt-1">
-        <div class="col col-auto">
+        <div className="form-row align-items-center pt-1">
+        <div className="col col-auto">
         Wait for keys: 
         </div>
-        <div class="col col-auto">
+        <div className="col col-auto">
         {menuOptions.map( menuOption => { 
         const buttonActive = menuOption.value in props.digitMenu
         return(
-        <button value={!buttonActive} name={menuOption.value} type="button" class={buttonActive ? 'ml-1 btn btn-sm btn-primary' : 'ml-1 btn btn-sm btn-outline-secondary'    } onClick={handleClick} >{menuOption.label}</button>
+        <button value={!buttonActive} name={menuOption.value} type="button" className={buttonActive ? 'ml-1 btn btn-sm btn-primary' : 'ml-1 btn btn-sm btn-outline-secondary'    } onClick={handleClick} >{menuOption.label}</button>
         )})}
         </div></div>
     )

@@ -3,9 +3,9 @@ import MenuActionSelect from '../components/MenuActionSelect'
 
 
 const MenuActionSequence = props => 
-(<ul class="list-group list-group-flush">
+(<ul className="list-group list-group-flush">
 {props.actionSettingsArray.map( (settings, index) => 
-    <li class="list-group-item">
+    <li className="list-group-item">
     <MenuActionSelect index={index} settings={settings} recordingOptions={props.recordingOptions} onChange={props.onChange} onDeleteClick={props.onDeleteClick} /></li>
 )}
     

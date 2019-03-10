@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 
 import MenuSectionDigitPressed from './components/MenuSectionDigitPressed'
@@ -8,12 +6,17 @@ import AccountHeader from './components/AccountHeader'
 import MainMenu from './components/MainMenu'
 import { switchboard } from './config'
 
-class App extends Component {
-
+export default class MenuApp extends Component {
 
   constructor(props) {
     super(props)
-    this.state = switchboard
+    if(this.props.location.pathname.replace(/\//g, '')==="open") {
+       this.state = switchboard.openMenu
+    } else {
+      this.state = switchboard.closedMenu
+    }
+
+    this.state["recordings"] = switchboard.recordings
     this.handlerNotifyClick=this.handlerNotifyClick.bind(this)
     this.handlerDigitActionChange=this.handlerDigitActionChange.bind(this)
     this.handlerDigitActionDelete=this.handlerDigitActionDelete.bind(this)    
@@ -23,15 +26,15 @@ class App extends Component {
   }
 
   handlerNotifyClick() {
-    this.setState( (state) => { state.openMenu.emailNotification = !state.openMenu.emailNotification ; return state})
+    this.setState( (state) => { state.emailNotification = !state.emailNotification ; return state})
   }
 
   handlerDigitActionDelete(digit,index) {
-    this.setState( (state) => { state.openMenu.menu[digit].splice(index, 1) ; return state})
+    this.setState( (state) => { state.menu[digit].splice(index, 1) ; return state})
   }
 
   handlerDigitActionAdd(digit) {
-    this.setState( (state) => { state.openMenu.menu[digit].push( { action: "playRecording", recordingId: 0 }) ; return state})
+    this.setState( (state) => { state.menu[digit].push( { action: "playRecording", recordingId: 0 }) ; return state})
   }
 
   handlerDigitActionChange(digit,field,index,value) {
@@ -47,9 +50,9 @@ class App extends Component {
 
   if (field === "action")
     {
-      this.setState( (state) => { state.openMenu.menu[digit][index] = actionPrimer[value] ; return state})
+      this.setState( (state) => { state.menu[digit][index] = actionPrimer[value] ; return state})
     } else {
-    this.setState( (state) => { state.openMenu.menu[digit][index][field] = value ; return state})
+    this.setState( (state) => { state.menu[digit][index][field] = value ; return state})
     }    
     
   }
@@ -57,15 +60,15 @@ class App extends Component {
   handlerDigitSelectionClick(a,digit,menuAdd,) {
 
     if (menuAdd) { //add to menu 
-      this.setState( (state) => { state.openMenu.menu[digit]= [{ action: "playRecording", recordingId: 0 }] ; return state})
+      this.setState( (state) => { state.menu[digit]= [{ action: "playRecording", recordingId: 0 }] ; return state})
     }
     else { //remove from menu 
-      this.setState( (state) => { delete state.openMenu.menu[digit]; return state})
+      this.setState( (state) => { delete state.menu[digit]; return state})
       }
     }
 
   handlerGreetingChange( field, value ){
-      this.setState( (state) => { state.openMenu.greeting[field]=value; return state})
+      this.setState( (state) => { state.greeting[field]=value; return state})
     }
 
 
@@ -73,14 +76,12 @@ class App extends Component {
     return (
       <div>
       <AccountHeader switchboardNumber={switchboard.number}/>
-      {this.props.location.pathname}
-      <MainMenu tab="open" />
-      <MenuSectionCallRx menuSettings={this.state.openMenu} recordingOptions={this.state.recordings} onGreetingChange={this.handlerGreetingChange} onNotifyClick={this.handlerNotifyClick} onDigitClick={this.handlerDigitSelectionClick} />
-      <MenuSectionDigitPressed digitMenu={this.state.openMenu.menu} recordingOptions={this.state.recordings} onChange={this.handlerDigitActionChange} onDeleteClick={this.handlerDigitActionDelete} onAddClick={this.handlerDigitActionAdd} />
+      <MainMenu tab={this.props.location.pathname.replace(/\//g, '')} />
+      <MenuSectionCallRx menuSettings={this.state} recordingOptions={this.state.recordings} onGreetingChange={this.handlerGreetingChange} onNotifyClick={this.handlerNotifyClick} onDigitClick={this.handlerDigitSelectionClick} />
+      <MenuSectionDigitPressed digitMenu={this.state.menu} recordingOptions={this.state.recordings} onChange={this.handlerDigitActionChange} onDeleteClick={this.handlerDigitActionDelete} onAddClick={this.handlerDigitActionAdd} />
       </div>
     )
   }
 }
 
-export default App;
 

@@ -4,14 +4,14 @@ import { faPlusSquare } from '@fortawesome/free-regular-svg-icons'
 
 const MenuActionAddAction = props => {
     return(
-    <div class="form-row align-items-center pt-1">
-    <div class="col col-auto">
-    <button onClick={props.onAddClick} type="button" class="btn btn-light btn-sm"><span class="text-primary">
+    <div className="form-row align-items-center pt-1">
+    <div className="col col-auto">
+    <button onClick={props.onAddClick} type="button" className="btn btn-light btn-sm"><span className="text-primary">
     <FontAwesomeIcon icon={faPlusSquare} size="lg"/> 
     </span></button> 
     </div>
-    <div class="col col-auto">
-    <button onClick={props.onAddClick} type="button" class="btn btn-light btn-sm"><span class="text-primary">
+    <div className="col col-auto">
+    <button onClick={props.onAddClick} type="button" className="btn btn-light btn-sm"><span className="text-primary">
     Add more...
     </span></button> 
     </div>

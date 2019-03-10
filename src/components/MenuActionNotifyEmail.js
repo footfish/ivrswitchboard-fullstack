@@ -15,10 +15,10 @@ export default class MenuActionNotifyEmail extends React.Component {
     render() {
         //note:  button+fontawsome because bootstap checkbox is messy for label positioning. 
         return(
-            <div class="form-row align-items-center pt-1">
-            <div class="col col-auto">Send call notification email:</div>
-            <div class="col col-auto">
-                        <button onClick={this.handleClick} type="button" class="btn btn-light btn-sm"><span class="text-primary">
+            <div className="form-row align-items-center pt-1">
+            <div className="col col-auto">Send call notification email:</div>
+            <div className="col col-auto">
+                        <button onClick={this.handleClick} type="button" className="btn btn-light btn-sm"><span className="text-primary">
                         <FontAwesomeIcon icon={this.props.notifyState ? faCheckSquare : faSquare} size="lg"/>
                         </span></button> 
             </div>
