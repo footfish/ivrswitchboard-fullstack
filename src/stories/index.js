@@ -19,6 +19,7 @@ import MenuSectionCallRx from '../components/MenuSectionCallRx'
 import TimesSectionWeek from '../components/TimesSectionWeek';
 import AccountHeader from '../components/AccountHeader'
 import { switchboard } from '../config'
+import { BrowserRouter as Router } from "react-router-dom";
 
 
 const WrapCol = ({ children }) => (
@@ -35,10 +36,10 @@ const Container = ({ children }) => (
 
 
 storiesOf('1. Main Menu', module)
-  .add("Times", () => <Container><MainMenu tab="times"  /></Container>)
-  .add("Open", () => <Container><MainMenu tab="open"  /></Container>)
-  .add("Closed", () => <Container><MainMenu tab="closed" /></Container>)
-  .add("Recordings", () => <Container><MainMenu tab="recordings" /></Container>)
+  .add("Times", () => <Container><Router><MainMenu tab="times"  /></Router></Container>)
+  .add("Open", () => <Container><Router><MainMenu tab="open"  /></Router></Container>)
+  .add("Closed", () => <Container><Router><MainMenu tab="closed" /></Router></Container>)
+  .add("Recordings", () => <Container><Router><MainMenu tab="recordings" /></Router></Container>)
 
 
 storiesOf('2. Times Page', module)
@@ -46,38 +47,39 @@ storiesOf('2. Times Page', module)
   .add("AlwaysOpen Option", () => <Container><TimesSectionOpeningOptions selected="alwaysOpen" onChange={action('changed')} /></Container>)
   .add("AlwaysClosed Option", () => <Container><TimesSectionOpeningOptions selected="alwaysClosed" onChange={action('changed')} /></Container>)
   .add("Monday Active", () => {
-    const dayData = { day: "mon", active: true, begin: "09:00", end: "17:00" }
+    const dayData = { active: true, begin: "09:00", end: "17:00" }
     return (
       <WrapCol>
-        <DayTimes id="work" settings={dayData} onChange={action('clicked')} />
+        <DayTimes groupId="workHours" day="mon" settings={dayData} onChange={action('clicked')} />
       </WrapCol>
     )
   })
   .add("Tuesday Inactive", () => {
-    const dayData = { day: "tue", active: false, begin: "10:00", end: "18:00" }
+    const dayData = { active: false, begin: "10:00", end: "18:00" }
     return (
       <WrapCol>
-        <DayTimes id="work" settings={dayData} onChange={action('clicked')} />
+        <DayTimes groupId="openHours" day="tue" settings={dayData} onChange={action('clicked')} />
       </WrapCol>
     )
   })
   .add("Week Mon-Fri", () => {
-    const schedule = {
-      openHours: [{ day: "mon", active: true, begin: "09:00", end: "17:00" },
-      { day: "tue", active: true, begin: "09:00", end: "17:00" },
-      { day: "wed", active: true, begin: "09:00", end: "17:00" },
-      { day: "thu", active: true, begin: "09:00", end: "17:00" },
-      { day: "fri", active: true, begin: "09:00", end: "13:00" },
-      { day: "sat", active: false, begin: "09:00", end: "17:00" },
-      { day: "sun", active: false, begin: "09:00", end: "17:00" }],
-      lunchHours: [{ day: "mon", active: true, begin: "13:00", end: "14:00" },
-      { day: "tue", active: true, begin: "13:00", end: "14:00" },
-      { day: "wed", active: true, begin: "13:00", end: "14:00" },
-      { day: "thu", active: true, begin: "13:00", end: "14:00" },
-      { day: "fri", active: false, begin: "13:00", end: "13:00" },
-      { day: "sat", active: false, begin: "09:00", end: "17:00" },
-      { day: "sun", active: false, begin: "09:00", end: "17:00" }]
-    }
+    const schedule =       { openHours: { "mon": { active: true, begin: "09:00", end: "17:00" },
+                                          "tue": { active: true, begin: "09:00", end: "17:00" },
+                                          "wed": { active: true, begin: "09:00", end: "17:00" },
+                                          "thu": { active: true, begin: "09:00", end: "17:00" },
+                                          "fri": { active: true, begin: "09:00", end: "13:00" },
+                                          "sat": { active: false, begin: "09:00", end: "17:00" },
+                                          "sun": { active: false, begin: "09:00", end: "17:00" }
+                            },
+                            lunchHours: { "mon": { active: true, begin: "13:00", end: "14:00" },
+                                          "tue": { active: true, begin: "13:00", end: "14:00" },
+                                          "wed": { active: true, begin: "13:00", end: "14:00" },
+                                          "thu": { active: true, begin: "13:00", end: "14:00" },
+                                          "fri": { active: false, begin: "13:00", end: "13:00" },
+                                          "sat": { active: false, begin: "09:00", end: "17:00" },
+                                          "sun": { active: false, begin: "09:00", end: "17:00" }
+}}
+
     return (<TimesSectionWeek schedule={schedule} onChange={action('changed')} />)
   })
 
@@ -188,25 +190,25 @@ storiesOf('3. Open-Closed Page', module)
 storiesOf('Full Pages', module)
   .add("Open", () => <Container>
       <AccountHeader switchboardNumber={switchboard.number}/>
-      <MainMenu tab="open" />
+      <Router><MainMenu tab="open" /></Router>
       <MenuSectionCallRx menuSettings={switchboard.openMenu} recordingOptions={switchboard.recordings} onGreetingChange={action('changed')} onNotifyClick={action('clicked')} onDigitClick={action('clicked')} />
       <MenuSectionDigitPressed digitMenu={switchboard.openMenu.menu} recordingOptions={switchboard.recordings} onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')} />
     </Container>)
   .add("Closed", () => <Container>
       <AccountHeader switchboardNumber={switchboard.number}/>
-      <MainMenu tab="closed"/>
+      <Router><MainMenu tab="closed"/></Router>
       <MenuSectionCallRx menuSettings={switchboard.closedMenu} recordingOptions={switchboard.recordings} onGreetingChange={action('changed')} onNotifyClick={action('clicked')} onDigitClick={action('clicked')} />
       <MenuSectionDigitPressed digitMenu={switchboard.closedMenu.menu} recordingOptions={switchboard.recordings} onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')} />
       </Container>)
   .add("Times (scheduled)", () => <Container>
       <AccountHeader switchboardNumber={switchboard.number}/>
-      <MainMenu tab="times"/>
+      <Router><MainMenu tab="times"/></Router>
       <TimesSectionOpeningOptions selected={switchboard.routeOption} onChange={action('changed')} />
       <TimesSectionWeek schedule={switchboard.schedule} onChange={action('changed')} />
     </Container>)
   .add("Times (open)", () => <Container>
       <AccountHeader switchboardNumber={switchboard.number}/>
-      <MainMenu tab="times" />
+      <Router><MainMenu tab="times" /></Router>
       <TimesSectionOpeningOptions selected="alwaysOpen" onChange={action('changed')} />
       </Container>)
   

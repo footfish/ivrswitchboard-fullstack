@@ -3,22 +3,22 @@ export const switchboard =  {
     number: "084412314555",
     routeOption : "scheduled",  //scheduled, alwaysOpen, alwaysClosed
     schedule : {
-      openHours: [  { day: "mon", active: true, begin: "09:00", end: "17:00" },
-                    { day: "tue", active: true, begin: "09:00", end: "17:00" },
-                    { day: "wed", active: true, begin: "09:00", end: "17:00" },
-                    { day: "thu", active: true, begin: "09:00", end: "17:00" },
-                    { day: "fri", active: true, begin: "09:00", end: "13:00" },
-                    { day: "sat", active: false, begin: "09:00", end: "17:00" },
-                    { day: "sun", active: false, begin: "09:00", end: "17:00" }
-                  ],
-      lunchHours: [ { day: "mon", active: true, begin: "13:00", end: "14:00" },
-                    { day: "tue", active: true, begin: "13:00", end: "14:00" },
-                    { day: "wed", active: true, begin: "13:00", end: "14:00" },
-                    { day: "thu", active: true, begin: "13:00", end: "14:00" },
-                    { day: "fri", active: false, begin: "13:00", end: "13:00" },
-                    { day: "sat", active: false, begin: "09:00", end: "17:00" },
-                    { day: "sun", active: false, begin: "09:00", end: "17:00" }
-                  ]
+      openHours: {  "mon": { active: true, begin: "09:00", end: "17:00" },
+                    "tue": { active: true, begin: "09:00", end: "17:00" },
+                    "wed": { active: true, begin: "09:00", end: "17:00" },
+                    "thu": { active: true, begin: "09:00", end: "17:00" },
+                    "fri": { active: true, begin: "09:00", end: "13:00" },
+                    "sat": { active: false, begin: "09:00", end: "17:00" },
+                    "sun": { active: false, begin: "09:00", end: "17:00" }
+                },
+      lunchHours: { "mon": { active: true, begin: "13:00", end: "14:00" },
+                    "tue": { active: true, begin: "13:00", end: "14:00" },
+                    "wed": { active: true, begin: "13:00", end: "14:00" },
+                    "thu": { active: true, begin: "13:00", end: "14:00" },
+                    "fri": { active: false, begin: "13:00", end: "13:00" },
+                    "sat": { active: false, begin: "09:00", end: "17:00" },
+                    "sun": { active: false, begin: "09:00", end: "17:00" }
+                }
     },
     openMenu : { 
       emailNotification: true,

@@ -4,7 +4,7 @@ const DayTimes = (props) =>  {
 
  const handleChange = (e) => {
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value
-    props.onChange(props.id, props.settings.day, e.target.name, value )
+    props.onChange(props.groupId, props.day, e.target.name, value )
   }
 
       return (
@@ -12,12 +12,12 @@ const DayTimes = (props) =>  {
             <div className="custom-control custom-checkbox form-group">
             <input
               name="active"
-              id={props.id+props.settings.day+"active"}
+              id={props.groupId+props.day+"active"}
               className="custom-control-input"
               type="checkbox"
               checked={props.settings.active}
               onChange={handleChange} />
-              <label className="text-capitalize custom-control-label" for={props.id+props.settings.day+"active"}>{props.settings.day}</label>
+              <label className="text-capitalize custom-control-label" for={props.groupId+props.day+"active"}>{props.day}</label>
               </div>
               { props.settings.active === true && 
                 <>

@@ -7,27 +7,32 @@ const TimesSectionWeek = (props) => {
      
     return( 
         <>
-        <SectionBorder label={label.openHours} borderBottom={false}>
-        <Week id="OpenHours" hoursArray={props.schedule.openHours} onChange={props.onChange}/>
-        </SectionBorder>
-        <SectionBorder label={label.lunchHours} borderBottom={true}>
-        <Week id="LunchHours" hoursArray={props.schedule.lunchHours} onChange={props.onChange}/>
-        </SectionBorder>
+        {
+            Object.keys(props.schedule).map ((key,idx) => {
+                return (
+                    <SectionBorder label={label[key]} borderBottom={idx===(Object.keys(props.schedule).length-1)}>            
+                       <Week groupId={key} weekSchedule={props.schedule[key]} onChange={props.onChange}/>
+                    </SectionBorder>
+                )
+            }
+                )
+        }
         </>
         )
  }
 
-const Week = ({id, hoursArray, onChange}) => {
+const Week = ({groupId, weekSchedule, onChange}) => {
     return(
         <div className="row">
         <div className="col">
         <div className="form-group">&nbsp;</div>
         <div className="form-group"><input className="border-top-0 rounded-0 border-right-0 border-left-0 bg-transparent form-control" type="text" placeholder="Begins" disabled/></div>
         <div className="form-group"><input className="border-top-0 rounded-0 border-right-0 border-left-0 bg-transparent form-control" type="text" placeholder="Ends" disabled/></div></div> 
-            {hoursArray.map( 
-                daySchedule => { return (
+            {Object.keys(weekSchedule).map( key => {
+                var daySchedule = weekSchedule[key]
+                return (
                     <div className="col"> 
-                    <DayTimes id={id} settings={daySchedule} onChange={onChange}/>
+                    <DayTimes groupId={groupId} day={key} settings={daySchedule} onChange={onChange}/>
                     </div>
                     )})}
         </div>

@@ -4,11 +4,11 @@ import SectionBorder from './SectionBorder'
 const TimesSectionOpeningOptions = (props) => {
     
 const handleChange = (e) => {
-        props.onChange(e.target.name, e.target.value)
+        props.onChange(e.target.value)
       }
 
 const options = [ {value: "scheduled", label: "Scheduled" },
-                  {value: "alwaysOpen", label: "Always Open"},
+                  {value: "alwaysOpen", label: "Always Opens"},
                   {value: "alwaysClosed", label: "Always Closed"}]
 
 return( 

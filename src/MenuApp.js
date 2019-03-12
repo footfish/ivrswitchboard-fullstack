@@ -15,8 +15,7 @@ export default class MenuApp extends Component {
     } else {
       this.state = switchboard.closedMenu
     }
-
-    this.state["recordings"] = switchboard.recordings
+    this.state.recordings = switchboard.recordings
     this.handlerNotifyClick=this.handlerNotifyClick.bind(this)
     this.handlerDigitActionChange=this.handlerDigitActionChange.bind(this)
     this.handlerDigitActionDelete=this.handlerDigitActionDelete.bind(this)    
