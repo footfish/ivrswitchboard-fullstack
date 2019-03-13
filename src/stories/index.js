@@ -18,18 +18,18 @@ import MenuSectionDigitPressed from '../components/MenuSectionDigitPressed'
 import MenuSectionCallRx from '../components/MenuSectionCallRx'
 import TimesSectionWeek from '../components/TimesSectionWeek';
 import AccountHeader from '../components/AccountHeader'
-import { switchboard } from '../config'
+import { dummySwitchboard as switchboard } from '../config'
 import { BrowserRouter as Router } from "react-router-dom";
 
 
 const WrapCol = ({ children }) => (
-  <div class="container pt-5"><div class="row"><div class="col-sm-2 border">
+  <div className="container pt-5"><div className="row"><div className="col-sm-2 border">
     {children}
   </div></div></div>
 );
 
 const Container = ({ children }) => (
-  <div class="container pt-5">
+  <div className="container pt-5">
     {children}
   </div>
 );

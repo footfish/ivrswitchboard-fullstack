@@ -34,8 +34,8 @@ render(){
         <div className="form-row align-items-center">
            <Bullet onClick={this.handleDeleteClick} index={this.props.index}/>
         <div className="col col-auto py-1">
-                <select name="action" className="form-control" onChange={this.handleChange}>
-                {selectOptions.map( (option) => <option  selected={this.props.settings.action===option.value && true} value={option.value}>{option.label}</option>)}
+                <select name="action" className="form-control" onChange={this.handleChange} defaultValue={this.props.settings.action}>
+                {selectOptions.map( (option) => <option key={option.value} value={option.value}>{option.label}</option>)}
                 </select>
         </div>
         <Action action={this.props.settings.action} settings={this.props.settings} recordingOptions={this.props.recordingOptions} onChange={this.handleChange}/>
@@ -88,8 +88,8 @@ const PlayRecording = ({settings, recordingOptions, onChange}) => {
     return(
     <>
     <div className="col col-auto" >
-        <select name="recordingId" className="form-control" onChange={onChange}>
-         {recordingOptions.map( (recording, idx) => <option value={idx} selected={settings.recordingId===idx && true}>{recording.label}</option>)}
+        <select name="recordingId" className="form-control" onChange={onChange} defaultValue={settings.recordingId}>
+         {recordingOptions.map( (recording, idx) => <option key={idx} value={idx} >{recording.label}</option>)}
         </select>
     </div>
 
@@ -111,11 +111,11 @@ const ForwardToNumber = ({settings, onChange}) => {
     return (
     
     <><div className="col col-auto">
-    <input type="text" className={validatePhonenumber(settings.number) ? "form-control" : "form-control is-invalid"} value={settings.number} name="number" autocomplete="number" placeholder="Enter a phone number" onChange={onChange}/>
+    <input type="text" className={validatePhonenumber(settings.number) ? "form-control" : "form-control is-invalid"} value={settings.number} name="number" autoComplete="number" placeholder="Enter a phone number" onChange={onChange}/>
     </div>
     <div className="col col-auto">
-        <select name="ringTimer" className="form-control" onChange={onChange}>
-        {secondsOptions.map( (option) => <option  selected={settings.ringTimer===option?true:false} value={option}>{option+' sec'}</option>)}
+        <select name="ringTimer" className="form-control" onChange={onChange}  defaultValue={settings.ringTimer}>
+        {secondsOptions.map( (option) => <option key={option} value={option}>{option+' sec'}</option>)}
         </select>
     </div></>
     
@@ -126,11 +126,11 @@ const ForwardToNumberWhisper = ({settings, onChange}) => {
     return (
     
     <><div className="col col-auto">
-    <input type="text" className={validatePhonenumber(settings.number) ? "form-control" : "form-control is-invalid"} value={settings.number} name="number"  autocomplete="number" placeholder="Enter a phone number" onChange={onChange}/>
+    <input type="text" className={validatePhonenumber(settings.number) ? "form-control" : "form-control is-invalid"} value={settings.number} name="number"  autoComplete="number" placeholder="Enter a phone number" onChange={onChange}/>
     </div>
     <div className="col col-auto">
-        <select name="ringTimer" className="form-control" onChange={onChange}>
-        {secondsOptions.map( (option) => <option  selected={settings.ringTimer===option?true:false} value={option}>{option+' sec'}</option>)}
+        <select name="ringTimer" className="form-control" onChange={onChange}  defaultValue={settings.ringTimer}>
+        {secondsOptions.map( (option) => <option key={option} value={option}>{option+' sec'}</option>)}
         </select>
     </div></>
     
@@ -141,11 +141,11 @@ const ForwardToNumberConfirm = ({settings, onChange}) => {
     return (
     
     <><div className="col col-auto">
-    <input type="text" className={validatePhonenumber(settings.number) ? "form-control" : "form-control is-invalid"} value={settings.number} name="number"  autocomplete="number" placeholder="Enter a phone number" onChange={onChange}/>
+    <input type="text" className={validatePhonenumber(settings.number) ? "form-control" : "form-control is-invalid"} value={settings.number} name="number"  autoComplete="number" placeholder="Enter a phone number" onChange={onChange}/>
     </div>
     <div className="col col-auto">
-        <select name="ringTimer" className="form-control" onChange={onChange}>
-        {secondsOptions.map( (option) => <option  selected={settings.ringTimer===option?true:false} value={option}>{option+' sec'}</option>)}
+        <select name="ringTimer" className="form-control" onChange={onChange} defaultValue={settings.ringTimer}>
+        {secondsOptions.map( (option) => <option key={option} value={option}>{option+' sec'}</option>)}
         </select>
     </div></>
     

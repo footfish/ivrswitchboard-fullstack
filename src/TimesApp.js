@@ -5,22 +5,23 @@ import TimesSectionOpeningOptions from './components/TimesSectionOpeningOptions'
 import TimesSectionWeek from './components/TimesSectionWeek';
 import AccountHeader from './components/AccountHeader'
 import MainMenu from './components/MainMenu'
-
-import { switchboard } from './config'
+import api from './test/StubAPI';
 
     export default class TimesApp extends Component
 {
     constructor (props){
     super(props)
-    this.state = {schedule: "", routeOption: ""}
-    this.state.schedule = switchboard.schedule
-    this.state.routeOption = switchboard.routeOption
+    this.state = {number: "loading..."}
     this.handleOpeningOptionsChange=this.handleOpeningOptionsChange.bind(this)
     this.handleTimeChange=this.handleTimeChange.bind(this)
     }
 
+    componentDidMount() {
+        api.getTimes(this)
+    }
+
     handleOpeningOptionsChange(newOption) {
-        this.setState( {routeOption: newOption})        
+        this.setState( {routeOption: newOption})      
     }
 
     handleTimeChange(groupId, day, field, newValue) {
@@ -50,7 +51,7 @@ import { switchboard } from './config'
                     }
                 })        
             } else {
-                this.setState( (state) => { state.schedule[groupId][day][field] = newValue ;  return state})        
+                this.setState( (state) => state.schedule[groupId][day][field] = newValue )        
             }
         } else { //handle change of begin/end time 
             if (groupId === "openHours") { 
@@ -100,9 +101,9 @@ import { switchboard } from './config'
     render() {
         return(
             <div>
-            <AccountHeader switchboardNumber={switchboard.number}/>
+            <AccountHeader switchboardNumber={this.state.number}/>
             <MainMenu tab={this.props.location.pathname.replace(/\//g, '')} />
-            <TimesSectionOpeningOptions selected={this.state.routeOption} onChange={this.handleOpeningOptionsChange} />
+            { this.state.number !== 'loading...' && <TimesSectionOpeningOptions selected={this.state.routeOption} onChange={this.handleOpeningOptionsChange} />}
             {this.state.routeOption==="scheduled" && <TimesSectionWeek schedule={this.state.schedule} onChange={this.handleTimeChange} />}
             </div>
         )

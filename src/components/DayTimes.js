@@ -8,6 +8,7 @@ const DayTimes = (props) =>  {
   }
 
       return (
+            <div className="col" > 
             <fieldset className="text-center">
             <div className="custom-control custom-checkbox form-group">
             <input
@@ -17,7 +18,7 @@ const DayTimes = (props) =>  {
               type="checkbox"
               checked={props.settings.active}
               onChange={handleChange} />
-              <label className="text-capitalize custom-control-label" for={props.groupId+props.day+"active"}>{props.day}</label>
+              <label className="text-capitalize custom-control-label" htmlFor={props.groupId+props.day+"active"}>{props.day}</label>
               </div>
               { props.settings.active === true && 
                 <>
@@ -26,6 +27,7 @@ const DayTimes = (props) =>  {
                 </>
               } 
           </fieldset>
+          </div>
       )
     }
   
