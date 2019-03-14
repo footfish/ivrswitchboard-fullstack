@@ -1,6 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
+import { Link } from "react-router-dom";
 
 const AccountHeader = (props) => {
 
@@ -23,11 +24,11 @@ const ProfileMenu = () => {
     return(
         <div className="text-primary text-center dropdown"><a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#1"><FontAwesomeIcon icon={faUserCircle} size="3x"/><br/><FontAwesomeIcon icon={faEllipsisH} size="1x"/></a>
         <div className="dropdown-menu dropdown-menu-right">
-        <a className="dropdown-item" href="/#">Account Profile</a>
-        <a className="dropdown-item" href="/#">Payment Settings</a>
-        <a className="dropdown-item" href="/#">Billing Statement</a>
+        <Link className="dropdown-item" to="/account">Account Profile</Link>
+        <Link className="dropdown-item" to="/payment">Payment Settings</Link>
+        <Link className="dropdown-item" to="/billing">Billing Statement</Link>
         <div className="dropdown-divider"></div>
-        <a className="dropdown-item" href="/#">Sign Out</a>
+        <Link className="dropdown-item" to="/">Sign Out</Link>
         </div>
         </div>
     )

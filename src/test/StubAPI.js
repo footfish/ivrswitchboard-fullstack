@@ -1,7 +1,8 @@
 class StubAPI {
     
     constructor() {
-        this.apiURL = "http://www.mocky.io/v2/5c8921982f0000d906ec96a5?mocky-delay=1750ms"
+//        this.apiURL = "http://www.mocky.io/v2/5c8921982f0000d906ec96a5?mocky-delay=1750ms"
+        this.apiURL = "http://www.mocky.io/v2/5c8921982f0000d906ec96a5"
     }
 
 
@@ -9,7 +10,7 @@ class StubAPI {
         fetch(this.apiURL)
         .then(resp => resp.json())
         .then(data => {
-            let apiResp = {number: data.number, schedule: data.schedule, routeOption: data.routeOption}
+            let apiResp = {localChanges: false, number: data.number, schedule: data.schedule, routeOption: data.routeOption}
             handlerAPI(apiResp)
         })
         .catch (() => {
@@ -24,6 +25,7 @@ class StubAPI {
         .then(resp => resp.json())
         .then(data => {
             let apiResp = data.openMenu
+            apiResp.localChanges = false
             apiResp.recordings = data.recordings
             apiResp.number = data.number
             handlerAPI(apiResp)
@@ -39,6 +41,7 @@ class StubAPI {
         .then(resp => resp.json())
         .then(data => {
             let apiResp = data.closedMenu
+            apiResp.localChanges = false
             apiResp.recordings = data.recordings
             apiResp.number = data.number
             handlerAPI(apiResp)
