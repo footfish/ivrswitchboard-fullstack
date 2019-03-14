@@ -8,6 +8,7 @@ import { action } from '@storybook/addon-actions'
 import DayTimes from '../components/DayTimes'
 import TimesSectionOpeningOptions from '../components/TimesSectionOpeningOptions'
 import MainMenu from '../components/MainMenu'
+import AppStatus from '../components/AppStatus'
 import MenuActionWaitDTMF from '../components/MenuActionWaitDTMF'
 import MenuActionGreeting from '../components/MenuActionGreeting'
 import MenuActionNotifyEmail from '../components/MenuActionNotifyEmail'
@@ -35,12 +36,10 @@ const Container = ({ children }) => (
 );
 
 
-storiesOf('1. Main Menu', module)
-  .add("Times", () => <Container><Router><MainMenu tab="times"  /></Router></Container>)
-  .add("Open", () => <Container><Router><MainMenu tab="open"  /></Router></Container>)
-  .add("Closed", () => <Container><Router><MainMenu tab="closed" /></Router></Container>)
-  .add("Recordings", () => <Container><Router><MainMenu tab="recordings" /></Router></Container>)
-
+storiesOf('1. Common', module)
+  .add("Main Menu", () => <Container><Router><MainMenu/></Router></Container>)
+  .add("Ok Message", () => <Container><AppStatus status="ok" message="Everything is just fine"/></Container>)
+  .add("Error Message", () => <Container><AppStatus status="error" message="This is serious"/></Container>)
 
 storiesOf('2. Times Page', module)
   .add("Scheduled Option", () => <Container><TimesSectionOpeningOptions selected="scheduled" onChange={action('changed')} /></Container>)

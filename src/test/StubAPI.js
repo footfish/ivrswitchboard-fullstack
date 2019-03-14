@@ -5,39 +5,49 @@ class StubAPI {
     }
 
 
-    getTimes(reactComponent) {
+    getTimes(handlerAPI) {
         fetch(this.apiURL)
         .then(resp => resp.json())
-        .then(data => reactComponent.setState((state) => {
-            state.number = data.number
-            state.schedule=data.schedule
-            state.routeOption=data.routeOption
-            return state
-        }))
+        .then(data => {
+            let apiResp = {number: data.number, schedule: data.schedule, routeOption: data.routeOption}
+            handlerAPI(apiResp)
+        })
+        .catch (() => {
+            let apiResp = {status: "error", statusMessage: "Error retrieving data. Make sure your Internet is working and try again."}
+            handlerAPI(apiResp)
+        })
     }
 
-    getOpenMenu(reactComponent){
+
+    getOpenMenu(handlerAPI){
         fetch(this.apiURL)
         .then(resp => resp.json())
-        .then(data => reactComponent.setState((state) => {
-            state = data.openMenu
-            state.recordings = data.recordings
-            state.number = data.number
-            return state
-        }))
+        .then(data => {
+            let apiResp = data.openMenu
+            apiResp.recordings = data.recordings
+            apiResp.number = data.number
+            handlerAPI(apiResp)
+        })
+        .catch (() => {
+            let apiResp = {status: "error", statusMessage: "Error retrieving data. Make sure your Internet is working and try again."}
+            handlerAPI(apiResp)
+        })
     }
 
-    getClosedMenu(reactComponent){
+    getClosedMenu(handlerAPI){
         fetch(this.apiURL)
         .then(resp => resp.json())
-        .then(data => reactComponent.setState((state) => {
-            state = data.closedMenu
-            state.recordings = data.recordings
-            state.number = data.number
-            return state
-        }))
+        .then(data => {
+            let apiResp = data.closedMenu
+            apiResp.recordings = data.recordings
+            apiResp.number = data.number
+            handlerAPI(apiResp)
+        })
+        .catch (() => {
+            let apiResp = {status: "error", statusMessage: "Error retrieving data. Make sure your Internet is working and try again."}
+            handlerAPI(apiResp)
+        })
     }
-
     
 }
 
