@@ -9,9 +9,7 @@ import AppStatus from '../components/AppStatus'
 export default class BillingApp extends Component{
     constructor(props) {
         super(props)
-        this.state = {status: "ok",
-        statusMessage : "Check your billing statements.",
-        number: "loading..."}
+        this.state = {status: "billing"}
 }
     
     render()
@@ -19,7 +17,7 @@ export default class BillingApp extends Component{
         return(<div>
             <AccountHeader switchboardNumber={this.state.number}/>
             <MainMenu/>
-            <AppStatus status={this.state.status} message={this.state.statusMessage}/>
+            <AppStatus status={this.state.status} />
         </div>)
     }
 }

@@ -6,7 +6,7 @@ import AccountHeader from '../components/AccountHeader'
 import MainMenu from '../components/MainMenu'
 import AppStatus from '../components/AppStatus'
 import MenuSubmit from '../components/MenuSubmit'
-import api from '../test/StubAPI'
+import api from '../lib/SwitchboardAPI'
 
 
 export default class MenuApp extends Component {
@@ -14,11 +14,9 @@ export default class MenuApp extends Component {
   constructor(props) {
     console.log("construct")
     super(props)
+    this.id = "7021a27d04454b5fa817a2c391bff69e" //temp 
     this.menuType=this.props.location.pathname.replace(/\//g, '')
-    this.state = {localChanges: false,
-                  status: "ok",
-                  statusMessage : `Configure how your switchboard routes calls during ${this.menuType} hours`,
-                  number: "loading..."}
+    this.state = {localChanges: false, status: "loading" }
  
     this.handlerNotifyClick=this.handlerNotifyClick.bind(this)
     this.handlerDigitActionChange=this.handlerDigitActionChange.bind(this)
@@ -27,15 +25,16 @@ export default class MenuApp extends Component {
     this.handlerDigitSelectionClick=this.handlerDigitSelectionClick.bind(this) 
     this.handlerGreetingChange=this.handlerGreetingChange.bind(this) 
     this.handlerApi=this.handlerApi.bind(this) 
-    this.handlerRevert=this.handlerRevert.bind(this) 
+    this.handlerRevertChanges=this.handlerRevertChanges.bind(this) 
+    this.handlerApplyChanges=this.handlerApplyChanges.bind(this) 
   }
 
   componentDidMount() {
-    console.log("mount")    
+    this.setState( {status: "loading"} )
     if(this.menuType==="open") {
-          api.getOpenMenu(this.handlerApi)
+          api.readOpenMenu(this.id, this.handlerApi)
     } else {
-          api.getClosedMenu(this.handlerApi)
+          api.readClosedMenu(this.id, this.handlerApi)
     }
 }
 
@@ -95,16 +94,30 @@ export default class MenuApp extends Component {
     }
 
   flagLocalChange(){
-      this.setState( state => state.localChanges=true)
+    this.setState( {localChanges:true, status: "modified" })
   }
 
-  handlerRevert(){
+  handlerRevertChanges(){
+    this.setState( {localChanges: false, status: "loading"} )
     if(this.menuType==="open") {
-      api.getOpenMenu(this.handlerApi)
+      api.readOpenMenu(this.id, this.handlerApi)
     } else {
-      api.getClosedMenu(this.handlerApi)
+      api.readClosedMenu(this.id, this.handlerApi)
     }
   }
+
+  handlerApplyChanges(){
+    this.setState( {localChanges: false, status: "uploading" } )
+
+     if(this.menuType==="open") {
+      const menuData = { openMenu: { menu: this.state.menu, emailNotification: this.state.emailNotification, greeting: this.state.greeting}}
+      api.updateOpenMenu(this.id, menuData, this.handlerApi)
+    } else {
+      const menuData = { closedMenu: { menu: this.state.menu, emailNotification: this.state.emailNotification, greeting: this.state.greeting}}
+      api.updateClosedMenu(this.id, menuData, this.handlerApi)
+    }
+  }
+
 
   render() {
     console.log("render")
@@ -112,10 +125,10 @@ export default class MenuApp extends Component {
       <div>
       <AccountHeader switchboardNumber={this.state.number}/>
       <MainMenu/>
-      <AppStatus status={this.state.status} message={this.state.statusMessage}/>
-      { this.state.localChanges && <MenuSubmit onRevert={this.handlerRevert} />}
-      { this.state.number !== 'loading...' && <MenuSectionCallRx menuSettings={this.state} recordingOptions={this.state.recordings} onGreetingChange={this.handlerGreetingChange} onNotifyClick={this.handlerNotifyClick} onDigitClick={this.handlerDigitSelectionClick} />}
-      { this.state.number !== 'loading...' && <MenuSectionDigitPressed digitMenu={this.state.menu} recordingOptions={this.state.recordings} onChange={this.handlerDigitActionChange} onDeleteClick={this.handlerDigitActionDelete} onAddClick={this.handlerDigitActionAdd} />}
+      <AppStatus status={this.state.status} />
+      { this.state.localChanges && <MenuSubmit onRevert={this.handlerRevertChanges} onApply={this.handlerApplyChanges} />}
+      { this.state.status !== 'loading' && <MenuSectionCallRx menuSettings={this.state} recordingOptions={this.state.recordings} onGreetingChange={this.handlerGreetingChange} onNotifyClick={this.handlerNotifyClick} onDigitClick={this.handlerDigitSelectionClick} />}
+      { this.state.status !== 'loading' && <MenuSectionDigitPressed digitMenu={this.state.menu} recordingOptions={this.state.recordings} onChange={this.handlerDigitActionChange} onDeleteClick={this.handlerDigitActionDelete} onAddClick={this.handlerDigitActionAdd} />}
       </div>
     )
   }

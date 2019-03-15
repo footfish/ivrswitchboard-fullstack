@@ -7,24 +7,24 @@ import AccountHeader from '../components/AccountHeader'
 import MainMenu from '../components/MainMenu'
 import AppStatus from '../components/AppStatus'
 import MenuSubmit from '../components/MenuSubmit'
-import api from '../test/StubAPI';
+import api from '../lib/SwitchboardAPI';
 
     export default class TimesApp extends Component
 {
     constructor (props){
     super(props)
-    this.state = {localChanges: false,
-                  status: "ok",
-                  statusMessage : "Configure times when your switchboard routes calls to the open or closed menu.",
-                  number: "loading..."}
+    this.id = "7021a27d04454b5fa817a2c391bff69e" //temp 
+    this.state = {localChanges: false, status: "loading" }
     this.handleOpeningOptionsChange=this.handleOpeningOptionsChange.bind(this)
     this.handleTimeChange=this.handleTimeChange.bind(this)
     this.handlerApi=this.handlerApi.bind(this)     
-    this.handlerRevert=this.handlerRevert.bind(this) 
+    this.handlerRevertChanges=this.handlerRevertChanges.bind(this) 
+    this.handlerApplyChanges=this.handlerApplyChanges.bind(this) 
     }
 
     componentDidMount() {
-        api.getTimes(this.handlerApi)
+        this.setState( {status: "loading"} )
+        api.readTimes(this.id, this.handlerApi)
     }
 
     handlerApi(response) {
@@ -119,21 +119,29 @@ import api from '../test/StubAPI';
     }
 
     flagLocalChange(){
-        this.setState( state => state.localChanges=true)
+        this.setState( {localChanges:true, status: "modified" } )
     }
   
-    handlerRevert(){
-        api.getTimes(this.handlerApi)
+    handlerRevertChanges(){
+        this.setState( {localChanges: false, status: "loading"} )
+        api.readTimes(this.id, this.handlerApi)
     }
+
+    handlerApplyChanges(){
+        this.setState( {localChanges: false, status: "uploading" } )
+        const timesData = {number: this.state.number, schedule: this.state.schedule, routeOption: this.state.routeOption}
+        api.updateTimes(this.id, timesData,this.handlerApi)
+    }
+
   
     render() {
         return(
             <div>
             <AccountHeader switchboardNumber={this.state.number}/>
             <MainMenu/>
-            <AppStatus status={this.state.status} message={this.state.statusMessage}/>            
-            { this.state.localChanges && <MenuSubmit onRevert={this.handlerRevert} />}
-            { this.state.number !== 'loading...' && <TimesSectionOpeningOptions selected={this.state.routeOption} onChange={this.handleOpeningOptionsChange} />}
+            <AppStatus status={this.state.status} />            
+            { this.state.localChanges && <MenuSubmit onRevert={this.handlerRevertChanges} onApply={this.handlerApplyChanges}/>}
+            { this.state.status !== 'loading' && <TimesSectionOpeningOptions selected={this.state.routeOption} onChange={this.handleOpeningOptionsChange} />}
             {this.state.routeOption==="scheduled" && <TimesSectionWeek schedule={this.state.schedule} onChange={this.handleTimeChange} />}
             </div>
         )

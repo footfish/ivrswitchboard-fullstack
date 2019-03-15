@@ -9,9 +9,7 @@ import AppStatus from '../components/AppStatus'
 export default class AccountApp extends Component{
     constructor(props) {
         super(props)
-        this.state = {status: "ok",
-        statusMessage : "Manage your account profile.",
-        number: "loading..."}
+        this.state = {status: "account"}
 }
     
     render()
@@ -19,7 +17,7 @@ export default class AccountApp extends Component{
         return(<div>
             <AccountHeader switchboardNumber={this.state.number}/>
             <MainMenu/>
-            <AppStatus status={this.state.status} message={this.state.statusMessage}/>
+            <AppStatus status={this.state.status}/>
         </div>)
     }
 }

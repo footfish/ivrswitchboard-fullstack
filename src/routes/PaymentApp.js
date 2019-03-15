@@ -9,9 +9,7 @@ import AppStatus from '../components/AppStatus'
 export default class PaymentApp extends Component{
     constructor(props) {
         super(props)
-        this.state = {status: "ok",
-        statusMessage : "Manage your payment Information.",
-        number: "loading..."}
+        this.state = {status: "payment"}
 }
     
     render()

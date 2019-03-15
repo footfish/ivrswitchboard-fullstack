@@ -1,3 +1,7 @@
+//Api 
+export const API_URI = "http://ec2-54-154-189-244.eu-west-1.compute.amazonaws.com/switchboard/" //trailing slash important
+export const API_HEADERS = {'Accept': 'application/json', 'Content-Type': 'application/json' }
+
 export const newSwitchboard =  {
     id : "1",
     number: "loading..",
