@@ -15,7 +15,7 @@ The app is a re-implementation of an active commercial switchboard server side a
 The app uses a 'page submit' approach which is most suitable for a live switchboard (allows review before activation).  
 The objective is to test a suitable front-end SPA replacement for the commercial switchboard tested against a mock api. 
 
- ###User Features 
+ ### User Features 
  
  + Mobile friendly
  + Route calls on a schedlule or overide to 'always open' / 'always closed'
@@ -26,7 +26,8 @@ The objective is to test a suitable front-end SPA replacement for the commercial
  + Playback sound recordings in the browser. 
  + Upload sound recordings (not implemented)
 
-###Wireframe mockups 
+### Wireframe mockups 
+
 ![Time](docimg/times.png "Times")
 ![Menu](docimg/open.png "Menu")
 
@@ -111,9 +112,14 @@ API/Model uses sample json below.
 
 ## UI Design.
 
-![Times](docimg/ui-times.png "UI Times page with a schedule active")
-![Open](docimg/ui-open.png "UI Open page showing digit '1' active on the menu with various actions")
-![Closed](docimg/ui-closed.png "UI Closed page with edits (requiring 'apply changes' to make live )")
+- **UI Times tab shown with a schedule active**
+![Times](docimg/ui-times.png "UI Times tab with a schedule active")
+
+- **UI Open tab showing digit '1' active on the menu with various actions**
+![Open](docimg/ui-open.png "UI Open page showing digit '1' tab on the menu with various actions")
+
+- **UI Closed tab with edits (requiring 'apply changes' to make live )**
+![Closed](docimg/ui-closed.png "UI Closed tab with edits (requiring 'apply changes' to make live )")
 
 ## Routing.
 
