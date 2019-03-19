@@ -8,9 +8,11 @@ export const PHONENUMBER_PATTERN = RegExp('^0[1-9][0-9]{7,15}') //matches a phon
 export const TEXTLABEL_PATTERN = RegExp('^[a-zA-Z0-9_-]{1,50}$') //matches a text label 1 to 50 chars with no spaces or special chars 
 export const PASSWORD_PATTERN = RegExp('^(?!.*\\s).{5,16}$') //matches a password 8-16 chars without space 
 
+export const BASE_PATHNAME = "/switchboardapp" //the server installation path used
+
 export const newSwitchboard =  {
-    id : "1",
-    number: "loading..",
+    id : "1", //uid
+    number: "08412345678", //phone number
     routeOption : "scheduled",  //scheduled, alwaysOpen, alwaysClosed
     schedule : {
       openHours: {  "mon": { active: true, begin: "09:00", end: "17:00" },

@@ -16,7 +16,7 @@ import LoginApp from './routes/LoginApp'
 const Routing = () => {
   
     return (
-      <Router basename="/switchboard">
+      <Router basename="/switchboardapp">
         <div className="container">
         <Switch>
           <Route path="/login/" exact component={LoginApp} />
