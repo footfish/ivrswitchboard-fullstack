@@ -136,7 +136,7 @@ API/Model uses sample json below.
 
 - Theming with bootstrap 
 
-- API with JWT auth [API code here](../lib/SwitchboardAPI.js)  
+- API with JWT auth [API code here](https://github.com/footfish/ivrswitchboard/blob/master/src/lib/SwitchboardAPI.js)  
 
 - Mock api testing using json-server & jsonwebtoken. Note: Simulated delay of 2s for API calls. 
   Can be reached on http://ec2-54-154-189-244.eu-west-1.compute.amazonaws.com/switchboard/
