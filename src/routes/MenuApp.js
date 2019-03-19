@@ -6,15 +6,14 @@ import AccountHeader from '../components/AccountHeader'
 import MainMenu from '../components/MainMenu'
 import AppStatus from '../components/AppStatus'
 import MenuSubmit from '../components/MenuSubmit'
+import { Redirect } from "react-router-dom";
 import api from '../lib/SwitchboardAPI'
 
 
 export default class MenuApp extends Component {
 
   constructor(props) {
-    console.log("construct")
     super(props)
-    this.id = "7021a27d04454b5fa817a2c391bff69e" //temp 
     this.menuType=this.props.location.pathname.replace(/\//g, '')
     this.state = {localChanges: false, status: "loading" }
  
@@ -24,23 +23,22 @@ export default class MenuApp extends Component {
     this.handlerDigitActionAdd=this.handlerDigitActionAdd.bind(this)    
     this.handlerDigitSelectionClick=this.handlerDigitSelectionClick.bind(this) 
     this.handlerGreetingChange=this.handlerGreetingChange.bind(this) 
-    this.handlerApi=this.handlerApi.bind(this) 
     this.handlerRevertChanges=this.handlerRevertChanges.bind(this) 
     this.handlerApplyChanges=this.handlerApplyChanges.bind(this) 
   }
 
   componentDidMount() {
     this.setState( {status: "loading"} )
-    if(this.menuType==="open") {
-          api.readOpenMenu(this.id, this.handlerApi)
-    } else {
-          api.readClosedMenu(this.id, this.handlerApi)
+
+    if (api.loggedIn())
+      {
+      if(this.menuType==="open") {
+          api.readOpenMenu().then( response => this.setState( state => response ))
+      } else {
+          api.readClosedMenu().then( response => this.setState( state => response ))
+      }
     }
 }
-
-  handlerApi(response) {
-      this.setState( state => response )
-  }
 
   handlerNotifyClick() {
     this.setState( state => state.emailNotification = !state.emailNotification)
@@ -100,9 +98,9 @@ export default class MenuApp extends Component {
   handlerRevertChanges(){
     this.setState( {localChanges: false, status: "loading"} )
     if(this.menuType==="open") {
-      api.readOpenMenu(this.id, this.handlerApi)
+      api.readOpenMenu().then( response => this.setState( state => response ))
     } else {
-      api.readClosedMenu(this.id, this.handlerApi)
+      api.readClosedMenu().then( response => this.setState( state => response ))
     }
   }
 
@@ -110,23 +108,22 @@ export default class MenuApp extends Component {
     this.setState( {localChanges: false, status: "uploading" } )
 
      if(this.menuType==="open") {
-      const menuData = { openMenu: { menu: this.state.menu, emailNotification: this.state.emailNotification, greeting: this.state.greeting}}
-      api.updateOpenMenu(this.id, menuData, this.handlerApi)
+      api.updateOpenMenu( { openMenu: { menu: this.state.menu, emailNotification: this.state.emailNotification, greeting: this.state.greeting}} )
+      .then( response => this.setState( state => response ))
     } else {
-      const menuData = { closedMenu: { menu: this.state.menu, emailNotification: this.state.emailNotification, greeting: this.state.greeting}}
-      api.updateClosedMenu(this.id, menuData, this.handlerApi)
+      api.updateClosedMenu( { closedMenu: { menu: this.state.menu, emailNotification: this.state.emailNotification, greeting: this.state.greeting}} )
+      .then( response => this.setState( state => response ))
     }
   }
 
 
   render() {
-    console.log("render")
     return (
       <div>
-      <AccountHeader switchboardNumber={this.state.number}/>
-      <MainMenu/>
+      {!api.loggedIn() && <Redirect to="/login"/> }                
+      <AccountHeader switchboardNumber={this.state.number} linksActive={!this.state.localChanges}/>
+      { this.state.localChanges ? <MenuSubmit onRevert={this.handlerRevertChanges} onApply={this.handlerApplyChanges} /> : <MainMenu/> } 
       <AppStatus status={this.state.status} />
-      { this.state.localChanges && <MenuSubmit onRevert={this.handlerRevertChanges} onApply={this.handlerApplyChanges} />}
       { this.state.status !== 'loading' && <MenuSectionCallRx menuSettings={this.state} recordingOptions={this.state.recordings} onGreetingChange={this.handlerGreetingChange} onNotifyClick={this.handlerNotifyClick} onDigitClick={this.handlerDigitSelectionClick} />}
       { this.state.status !== 'loading' && <MenuSectionDigitPressed digitMenu={this.state.menu} recordingOptions={this.state.recordings} onChange={this.handlerDigitActionChange} onDeleteClick={this.handlerDigitActionDelete} onAddClick={this.handlerDigitActionAdd} />}
       </div>

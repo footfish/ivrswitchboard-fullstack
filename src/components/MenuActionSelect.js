@@ -2,6 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faVolumeUp } from '@fortawesome/free-solid-svg-icons'
 import { faMinusSquare, faSquare } from '@fortawesome/free-regular-svg-icons'
+import {EMAILADDRESS_PATTERN, PHONENUMBER_PATTERN, TEXTLABEL_PATTERN} from '../config'
 
 export default class MenuActionSelect extends React.Component {
 constructor(props){
@@ -175,18 +176,15 @@ const Analytics = ({settings, onChange}) => (
 )
 
 const validateLabel = label => {
-    const labelPattern = RegExp('^[a-zA-Z0-9_-]{1,50}$');
-        return (labelPattern.test(label))
+        return (TEXTLABEL_PATTERN.test(label))
 }
 
 const validatePhonenumber = number=> {
-    const numberPattern = RegExp('^0[1-9][0-9]{7,15}');
-        return (numberPattern.test(number))
+        return (PHONENUMBER_PATTERN.test(number))
 }
 
 const validateEmail = email => {
-    const emailPattern = RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$');
-        return (emailPattern.test(email))
+        return (EMAILADDRESS_PATTERN.test(email))
 }
 
 

@@ -1,122 +1,189 @@
-import {API_URI, API_HEADERS} from "../config"
+import {API_URI, API_AUTHURI , API_HEADERS} from "../config"
+import decode from "jwt-decode";
 
 class SwitchboardAPI {
     
     constructor() {
-//        this.apiURL = "http://www.mocky.io/v2/5c8921982f0000d906ec96a5?mocky-delay=1750ms"
-//        this.apiURL = "http://www.mocky.io/v2/5c8921982f0000d906ec96a5"
         this.apiURL = API_URI 
     }
 
+    //Logs into api with email/password. Returns a Promise of true/false on success. JWT access token and uid kept in sessionStorage. 
+    login(email, password) { 
+        return fetch(API_AUTHURI, { //Get a JWT
+          method: "POST",
+          headers:  API_HEADERS,          
+          body: JSON.stringify({
+            email,
+            password
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (typeof data.access_token !== 'undefined' && typeof data.id !== 'undefined')
+                {
+                sessionStorage.setItem("access_token", data.access_token); //save JWT for authentication 
+                sessionStorage.setItem("user_id", data.id); //save users unique id 
+                return true
+            } else {
+                return false
+            }
+        }).catch( () => false )
+      }
 
-    readTimes(id, handlerAPI) {
-        fetch(this.apiURL + id)
+    logout(){
+        sessionStorage.removeItem("access_token"); //clear JWT
+        sessionStorage.removeItem("user_id"); //clear uid 
+    }
+
+    loggedIn(){
+        const access_token = sessionStorage.getItem("access_token")
+        if( access_token !== null){
+            try {
+                const decoded = decode(access_token);
+                if (decoded.exp > Date.now() / 1000) { // Check if token is expired.
+                    return true
+                } else {
+                    return false
+                }
+              } catch (err) {
+                return false
+              }
+
+        } else {
+            return false
+        }
+    }
+    
+    readTimes() {
+        API_HEADERS.Authorization = `Bearer ${sessionStorage.getItem("access_token")}`
+        return fetch(this.apiURL + sessionStorage.getItem("user_id"), {
+            headers:  API_HEADERS,          
+        })
         .then(resp => resp.json())
         .then(data => {
-            let apiResp = {status: "times", localChanges: false, number: data.number, schedule: data.schedule, routeOption: data.routeOption}
-            handlerAPI(apiResp)
+            let apiResp = {status: "loadError"}
+            if (typeof data.number !== 'undefined' && data.number !== "") {
+                apiResp = {status: "times", localChanges: false, number: data.number, schedule: data.schedule, routeOption: data.routeOption}
+            } 
+            return (apiResp)
         })
         .catch (() => {
-            let apiResp = {status: "loadError"}
-            handlerAPI(apiResp)
+            return ({status: "loadError"})
         })
     }
 
-    updateTimes(id, payload, handlerAPI) {
-        let fetchData = { 
+    updateTimes(payload) {
+        API_HEADERS.Authorization = `Bearer ${sessionStorage.getItem("access_token")}`
+        return fetch(this.apiURL + sessionStorage.getItem("user_id"), { 
             method: 'PATCH', 
             body: JSON.stringify(payload),
             headers:  API_HEADERS
-        }
-        fetch(this.apiURL + id, fetchData)
+        })
         .then(resp => resp.json())
         .then(data => {
-            let apiResp = {status: "times", localChanges: false, number: data.number, schedule: data.schedule, routeOption: data.routeOption}
-            handlerAPI(apiResp)
-        })
-        .catch (() => {
             let apiResp = {status: "uploadError", localChanges: true}
-            handlerAPI(apiResp)
-        })
-    }
-
-
-    readOpenMenu(id, handlerAPI){
-        fetch(this.apiURL + id)
-        .then(resp => resp.json())
-        .then(data => {
-            let apiResp = data.openMenu
-            apiResp.status = "open"
-            apiResp.localChanges = false
-            apiResp.recordings = data.recordings
-            apiResp.number = data.number
-            handlerAPI(apiResp)
+            if (typeof data.number !== 'undefined' && data.number !== "") {
+                apiResp = {status: "times", localChanges: false, number: data.number, schedule: data.schedule, routeOption: data.routeOption}
+            }
+            return (apiResp)
         })
         .catch (() => {
-            let apiResp = {status: "loadError"}
-            handlerAPI(apiResp)
+            return ({status: "uploadError", localChanges: true})
         })
     }
 
-    updateOpenMenu(id, payload, handlerAPI){
-        let fetchData = { 
+
+    readOpenMenu(){
+        API_HEADERS.Authorization = `Bearer ${sessionStorage.getItem("access_token")}`
+        return fetch(this.apiURL + sessionStorage.getItem("user_id"), {
+            headers:  API_HEADERS,          
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            let apiResp = {status: "loadError"}
+            if (typeof data.number !== 'undefined' && data.number !== "") {
+                apiResp = data.openMenu
+                apiResp.status = "open"
+                apiResp.localChanges = false
+                apiResp.recordings = data.recordings
+                apiResp.number = data.number
+            }
+            return (apiResp)
+        })
+        .catch (() => {
+            return ({status: "loadError"})
+        })
+    }
+
+    updateOpenMenu(payload){
+        API_HEADERS.Authorization = `Bearer ${sessionStorage.getItem("access_token")}`
+        return fetch(this.apiURL + sessionStorage.getItem("user_id"), { 
             method: 'PATCH', 
             body: JSON.stringify(payload),
             headers:  API_HEADERS
-        }
-        fetch(this.apiURL + id, fetchData)
+        })
         .then(resp => resp.json())
         .then(data => {
-            let apiResp = data.openMenu
-            apiResp.status = "open"            
-            apiResp.localChanges = false
-            apiResp.recordings = data.recordings
-            apiResp.number = data.number
-            handlerAPI(apiResp)
-        })
-        .catch (() => {
             let apiResp = {status: "uploadError", localChanges: true}
-            handlerAPI(apiResp)
-        })
-    }
-
-
-    readClosedMenu(id, handlerAPI){
-        fetch(this.apiURL + id)
-        .then(resp => resp.json())
-        .then(data => {
-            let apiResp = data.closedMenu
-            apiResp.status = "closed"            
-            apiResp.localChanges = false
-            apiResp.recordings = data.recordings
-            apiResp.number = data.number
-            handlerAPI(apiResp)
+            console.log(data)
+            if (typeof data.number !== 'undefined' && data.number !== "") {
+                apiResp = data.openMenu
+                apiResp.status = "open"            
+                apiResp.localChanges = false
+                apiResp.recordings = data.recordings
+                apiResp.number = data.number
+            }
+            return(apiResp)
         })
         .catch (() => {
-            let apiResp = {status: "loadError"}
-            handlerAPI(apiResp)
+            return ({status: "uploadError", localChanges: true})
         })
     }
 
-    updateClosedMenu(id, payload, handlerAPI){
-        let fetchData = { 
+
+    readClosedMenu(){
+        API_HEADERS.Authorization = `Bearer ${sessionStorage.getItem("access_token")}`
+        return fetch(this.apiURL + sessionStorage.getItem("user_id") ,{
+            headers:  API_HEADERS,          
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            let apiResp = {status: "loadError"}
+            if (typeof data.number !== 'undefined' && data.number !== "") {
+                apiResp = data.closedMenu
+                apiResp.status = "closed"            
+                apiResp.localChanges = false
+                apiResp.recordings = data.recordings
+                apiResp.number = data.number
+            }
+            return(apiResp)
+        })
+        .catch (() => {
+            return ({status: "loadError"})
+        })
+    }
+
+    updateClosedMenu(payload){
+        API_HEADERS.Authorization = `Bearer ${sessionStorage.getItem("access_token")}`
+        return fetch(this.apiURL + sessionStorage.getItem("user_id"), { 
             method: 'PATCH', 
             body: JSON.stringify(payload),
             headers:  API_HEADERS
-        }
-        fetch(this.apiURL + id, fetchData)
+        })
         .then(resp => resp.json())
         .then(data => {
-            let apiResp = data.closedMenu
-            apiResp.status = "closed"            
-            apiResp.localChanges = false
-            apiResp.recordings = data.recordings
-            apiResp.number = data.number
-            handlerAPI(apiResp)
+            let apiResp = {status: "uploadError", localChanges: true}
+            if (typeof data.number !== 'undefined' && data.number !== "") {
+                apiResp = data.closedMenu
+                apiResp.status = "closed"            
+                apiResp.localChanges = false
+                apiResp.recordings = data.recordings
+                apiResp.number = data.number
+            }
+            return (apiResp)
         })
         .catch (() => {
-            let apiResp = {status: "uploadError", localChanges: true}
-            handlerAPI(apiResp)
+            return ({status: "uploadError", localChanges: true})
         })
     }
 

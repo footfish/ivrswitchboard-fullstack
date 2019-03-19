@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-
-
 import TimesSectionOpeningOptions from '../components/TimesSectionOpeningOptions'
 import TimesSectionWeek from '../components/TimesSectionWeek';
 import AccountHeader from '../components/AccountHeader'
@@ -8,36 +6,32 @@ import MainMenu from '../components/MainMenu'
 import AppStatus from '../components/AppStatus'
 import MenuSubmit from '../components/MenuSubmit'
 import api from '../lib/SwitchboardAPI';
+import { Redirect } from "react-router-dom";
+
 
     export default class TimesApp extends Component
 {
     constructor (props){
     super(props)
-    this.id = "7021a27d04454b5fa817a2c391bff69e" //temp 
     this.state = {localChanges: false, status: "loading" }
-    this.handleOpeningOptionsChange=this.handleOpeningOptionsChange.bind(this)
-    this.handleTimeChange=this.handleTimeChange.bind(this)
-    this.handlerApi=this.handlerApi.bind(this)     
+    this.handlerOpeningOptionsChange=this.handlerOpeningOptionsChange.bind(this)
+    this.handlerTimeChange=this.handlerTimeChange.bind(this)
     this.handlerRevertChanges=this.handlerRevertChanges.bind(this) 
     this.handlerApplyChanges=this.handlerApplyChanges.bind(this) 
     }
 
     componentDidMount() {
         this.setState( {status: "loading"} )
-        api.readTimes(this.id, this.handlerApi)
+        api.loggedIn() && api.readTimes().then( response => this.setState( state => response ))
     }
 
-    handlerApi(response) {
-        this.setState( state => response )
-      }
-    
 
-    handleOpeningOptionsChange(newOption) {
+    handlerOpeningOptionsChange(newOption) {
         this.setState( {routeOption: newOption})      
         this.flagLocalChange()
     }
 
-    handleTimeChange(groupId, day, field, newValue) {
+    handlerTimeChange(groupId, day, field, newValue) {
         if (field === "active") { //handle 'activate' checkbox's
             if (groupId==='openHours' && newValue===false) {
                 this.flagLocalChange()
@@ -124,25 +118,25 @@ import api from '../lib/SwitchboardAPI';
   
     handlerRevertChanges(){
         this.setState( {localChanges: false, status: "loading"} )
-        api.readTimes(this.id, this.handlerApi)
+        api.readTimes().then( response => this.setState( state => response ))
     }
 
     handlerApplyChanges(){
         this.setState( {localChanges: false, status: "uploading" } )
-        const timesData = {number: this.state.number, schedule: this.state.schedule, routeOption: this.state.routeOption}
-        api.updateTimes(this.id, timesData,this.handlerApi)
+        api.updateTimes({number: this.state.number, schedule: this.state.schedule, routeOption: this.state.routeOption})
+        .then( response => this.setState( state => response ))
     }
 
   
     render() {
         return(
             <div>
-            <AccountHeader switchboardNumber={this.state.number}/>
-            <MainMenu/>
+            {!api.loggedIn() && <Redirect to="/login"/> }                
+            <AccountHeader switchboardNumber={this.state.number} linksActive={!this.state.localChanges}/>
+            { this.state.localChanges ? <MenuSubmit onRevert={this.handlerRevertChanges} onApply={this.handlerApplyChanges} /> : <MainMenu/> } 
             <AppStatus status={this.state.status} />            
-            { this.state.localChanges && <MenuSubmit onRevert={this.handlerRevertChanges} onApply={this.handlerApplyChanges}/>}
-            { this.state.status !== 'loading' && <TimesSectionOpeningOptions selected={this.state.routeOption} onChange={this.handleOpeningOptionsChange} />}
-            {this.state.routeOption==="scheduled" && <TimesSectionWeek schedule={this.state.schedule} onChange={this.handleTimeChange} />}
+            { this.state.status !== 'loading' && <TimesSectionOpeningOptions selected={this.state.routeOption} onChange={this.handlerOpeningOptionsChange} />}
+            {this.state.routeOption==="scheduled" && <TimesSectionWeek schedule={this.state.schedule} onChange={this.handlerTimeChange} />}
             </div>
         )
     }

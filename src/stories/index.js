@@ -19,6 +19,7 @@ import MenuSectionDigitPressed from '../components/MenuSectionDigitPressed'
 import MenuSectionCallRx from '../components/MenuSectionCallRx'
 import TimesSectionWeek from '../components/TimesSectionWeek';
 import AccountHeader from '../components/AccountHeader'
+import LoginForm from '../components/LoginForm'
 import { dummySwitchboard as switchboard } from '../config'
 import { BrowserRouter as Router } from "react-router-dom";
 
@@ -38,8 +39,25 @@ const Container = ({ children }) => (
 
 storiesOf('1. Common', module)
   .add("Main Menu", () => <Container><Router><MainMenu/></Router></Container>)
-  .add("Ok Message", () => <Container><AppStatus status="ok" message="Everything is just fine"/></Container>)
-  .add("Error Message", () => <Container><AppStatus status="error" message="This is serious"/></Container>)
+  .add("Status Messages", () => <Container>
+    <AppStatus status="default" />
+    <AppStatus status="times" />
+    <AppStatus status="open" />
+    <AppStatus status="closed" />
+    <AppStatus status="recordings" />
+    <AppStatus status="account" />
+    <AppStatus status="billing" />
+    <AppStatus status="payment" />
+    <AppStatus status="loading" />
+    <AppStatus status="uploading" />
+    <AppStatus status="loadError" />
+    <AppStatus status="uploadError" />
+    <AppStatus status="modified" />
+    <AppStatus status="error" />
+    </Container>)
+.add("Login Form", () => <Container><LoginForm onSubmit={action('submitted')}/></Container>)
+.add("Account Header - Links", () => <Router><Container><AccountHeader switchboardNumber="123445678" linksActive={true}/></Container></Router>)
+.add("Account Header - No links", () => <Router><Container><AccountHeader switchboardNumber="123445678" linksActive={false}/></Container></Router>)
 
 storiesOf('2. Times Page', module)
   .add("Scheduled Option", () => <Container><TimesSectionOpeningOptions selected="scheduled" onChange={action('changed')} /></Container>)
@@ -187,28 +205,29 @@ storiesOf('3. Open-Closed Page', module)
 
 
 storiesOf('Full Pages', module)
-  .add("Open", () => <Container>
+  .add("Login", () => <Container><LoginForm email="myemail@email.com" password="password123"  onChange={action('changed')} onSubmit={action('submitted')}/></Container>)
+  .add("Open", () => <Router><Container>
       <AccountHeader switchboardNumber={switchboard.number}/>
-      <Router><MainMenu tab="open" /></Router>
+      <MainMenu tab="open" />
       <MenuSectionCallRx menuSettings={switchboard.openMenu} recordingOptions={switchboard.recordings} onGreetingChange={action('changed')} onNotifyClick={action('clicked')} onDigitClick={action('clicked')} />
       <MenuSectionDigitPressed digitMenu={switchboard.openMenu.menu} recordingOptions={switchboard.recordings} onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')} />
-    </Container>)
-  .add("Closed", () => <Container>
+    </Container></Router>)
+  .add("Closed", () => <Router><Container>
       <AccountHeader switchboardNumber={switchboard.number}/>
-      <Router><MainMenu tab="closed"/></Router>
+      <MainMenu tab="closed"/>
       <MenuSectionCallRx menuSettings={switchboard.closedMenu} recordingOptions={switchboard.recordings} onGreetingChange={action('changed')} onNotifyClick={action('clicked')} onDigitClick={action('clicked')} />
       <MenuSectionDigitPressed digitMenu={switchboard.closedMenu.menu} recordingOptions={switchboard.recordings} onChange={action('changed')} onDeleteClick={action('delete')} onAddClick={action('add')} />
-      </Container>)
-  .add("Times (scheduled)", () => <Container>
+      </Container></Router>)
+  .add("Times (scheduled)", () => <Router><Container>
       <AccountHeader switchboardNumber={switchboard.number}/>
-      <Router><MainMenu tab="times"/></Router>
+      <MainMenu tab="times"/>
       <TimesSectionOpeningOptions selected={switchboard.routeOption} onChange={action('changed')} />
       <TimesSectionWeek schedule={switchboard.schedule} onChange={action('changed')} />
-    </Container>)
-  .add("Times (open)", () => <Container>
+    </Container></Router>)
+  .add("Times (open)", () => <Router><Container>
       <AccountHeader switchboardNumber={switchboard.number}/>
-      <Router><MainMenu tab="times" /></Router>
+      <MainMenu tab="times" />
       <TimesSectionOpeningOptions selected="alwaysOpen" onChange={action('changed')} />
-      </Container>)
+      </Container></Router>)
   
 
