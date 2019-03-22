@@ -26,7 +26,7 @@ export default class LoginApp extends Component{
     { return(
             <div className="container mt-4">    
             <div className="row justify-content-center align-items-center">
-            <div className="col-6">
+            <div className="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
             {api.loggedIn() && <Redirect to="/times"/> }                
             {this.state.message !== "" &&<div className="alert alert-danger" role="alert">{this.state.message}</div>}
             <LoginForm onSubmit={this.handlerSubmit}/>
