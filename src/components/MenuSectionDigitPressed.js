@@ -46,10 +46,11 @@ const MenuSectionDigitPressed = (props) => {
             let menuActions = props.digitMenu[key]
             let lastAction = menuActions[menuActions.length-1].action
             return(
-            <SectionBorder key={key+idx} label={sectionLabel[key]} borderBottom={idx === Object.keys(props.digitMenu).length-1}>
+            <div id={'section-'+key} key={key} >
+            <SectionBorder label={sectionLabel[key]} borderBottom={idx === Object.keys(props.digitMenu).length-1}>
             <MenuActionSequence actionSettingsArray={menuActions} recordingOptions={props.recordingOptions} onChange={ (n,i,v) => handleChange(key,n,i,v) } onDeleteClick={ (i) => handleDeleteClick(key, i )} />
             {addMoreEnabled[lastAction] &&     <li className="list-group-item"><MenuActionAddAction onAddClick={ () => handleAddClick(key)}/></li> }
-            </SectionBorder>
+            </SectionBorder></div>
         )})}</>
    
     )

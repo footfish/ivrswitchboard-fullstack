@@ -68,7 +68,7 @@ export default class MenuApp extends Component {
   
   if (field === "action")
     {
-      this.setState( state => state.menu[digit][index] = actionPrimer[value])
+      this.setState( state => state.menu[digit][index] = actionPrimer[value],)
     } else {
       this.setState( state => state.menu[digit][index][field] = value )
     }    
@@ -78,7 +78,10 @@ export default class MenuApp extends Component {
   handlerDigitSelectionClick(a,digit,menuAdd,) {
 
     if (menuAdd) { //add to menu 
-      this.setState( state => state.menu[digit]= [{ action: "playRecording", recordingId: 0 }]  )
+      this.setState( 
+        state => state.menu[digit]= [{ action: "playRecording", recordingId: 0 }],
+        () => document.querySelector( '#section-'+digit ).scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"})
+      )
     }
     else { //remove from menu 
       this.setState( state => delete state.menu[digit])
