@@ -11,12 +11,13 @@ import AccountApp from './routes/AccountApp'
 import PaymentApp from './routes/PaymentApp'
 import BillingApp from './routes/BillingApp'
 import LoginApp from './routes/LoginApp'
+import {BASE_PATHNAME} from "./config"
 
 
 const Routing = () => {
   
     return (
-      <Router basename="/switchboardapp">
+      <Router basename={BASE_PATHNAME}>
         <div className="container">
         <Switch>
           <Route path="/login/" exact component={LoginApp} />
