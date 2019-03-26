@@ -18,7 +18,7 @@ const Routing = () => {
   
     return (
       <Router basename={BASE_PATHNAME}>
-        <div className="container">
+        <div className="container px-0">
         <Switch>
           <Route path="/login/" exact component={LoginApp} />
           <Route path="/account/" exact component={AccountApp} />}

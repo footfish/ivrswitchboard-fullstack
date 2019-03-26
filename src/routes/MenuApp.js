@@ -84,6 +84,7 @@ export default class MenuApp extends Component {
       )
     }
     else { //remove from menu 
+      document.querySelector( '#section-'+digit ).scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"})
       this.setState( state => delete state.menu[digit])
       }
     this.flagLocalChange()

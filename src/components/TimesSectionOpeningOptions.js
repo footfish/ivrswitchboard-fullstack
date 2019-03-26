@@ -8,12 +8,12 @@ const handleChange = (e) => {
       }
 
 const options = [ {value: "scheduled", label: "Scheduled" },
-                  {value: "alwaysOpen", label: "Always Opens"},
+                  {value: "alwaysOpen", label: "Always Open"},
                   {value: "alwaysClosed", label: "Always Closed"}]
 
 return( 
                 <SectionBorder label="Routing of your phone number" borderBottom={props.selected !== options[0].value}>
-                <div className="px-3">
+                <div className="px-3 pb-2">
                 { options.map( option => <RadioBox key={option.value} label={option.label} name="OpeningOptions" value={option.value} checked={props.selected === option.value}  onChange={handleChange}/> )}
                 </div>
                 </SectionBorder>

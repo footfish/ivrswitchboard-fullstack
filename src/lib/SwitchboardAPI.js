@@ -125,7 +125,6 @@ class SwitchboardAPI {
         .then(resp => resp.json())
         .then(data => {
             let apiResp = {status: "uploadError", localChanges: true}
-            console.log(data)
             if (typeof data.number !== 'undefined' && data.number !== "") {
                 apiResp = data.openMenu
                 apiResp.status = "open"            
