@@ -14,7 +14,7 @@ const MenuActionGreeting = (props) => {
     return(<div className="form-row align-items-center pt-1">
     <div className="col col-auto">Playback</div>
     <div className="col col-auto" >
-        <select name="recordingId" className="form-control" onChange={handleChange} defaultValue={props.settings.recordingId}>
+        <select name="recordingId" className="form-control" onChange={handleChange} value={props.settings.recordingId}>
          {props.recordingOptions.map( (recording, idx) => <option key={idx} value={idx} >{recording.label}</option>)}
         </select>
     </div>
@@ -25,7 +25,7 @@ const MenuActionGreeting = (props) => {
             </button>
     </div>
     <div className="col col-auto">
-                <select name="times" className="form-control" onChange={handleChange} defaultValue={props.settings.times}>
+                <select name="times" className="form-control" onChange={handleChange} value={props.settings.times}>
                 {timesOptions.map( (option, idx) => <option key={option} value={idx+1}>{option}</option>)}
                 </select>
     </div>
