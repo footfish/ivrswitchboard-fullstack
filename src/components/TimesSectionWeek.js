@@ -4,14 +4,19 @@ import React from 'react'
 
 const TimesSectionWeek = (props) => {
     const label = { openHours: "Opening Hours", lunchHours: "Lunch Times"}
-     
+    
+    const weekScheduleDisplay=props.schedule     
+    Object.keys(weekScheduleDisplay["lunchHours"]).map( key => { //adapt week schedule to include a hide flag for lunch hours openHours not active
+        weekScheduleDisplay["lunchHours"][key].hidden=!weekScheduleDisplay["openHours"][key].active })
+
     return( 
         <>
         {
             Object.keys(props.schedule).map ((key,idx) => {
+                
                 return (
                     <SectionBorder key={key} label={label[key]} borderBottom={idx===(Object.keys(props.schedule).length-1)}>            
-                       <Week groupId={key} weekSchedule={props.schedule[key]} onChange={props.onChange}/>
+                       <Week groupId={key} weekSchedule={weekScheduleDisplay[key]} onChange={props.onChange}/>
                     </SectionBorder>
                 )
             }
@@ -31,7 +36,7 @@ const Week = ({groupId, weekSchedule, onChange}) => {
             {Object.keys(weekSchedule).map( key => {
                 var daySchedule = weekSchedule[key]
                 return (
-                    <DayTimes key={groupId+key} groupId={groupId} day={key} settings={daySchedule} onChange={onChange}/>
+                    <DayTimes key={groupId+key} groupId={groupId} day={key} settings={daySchedule} onChange={onChange} />
                     )})}
         </div>
     )

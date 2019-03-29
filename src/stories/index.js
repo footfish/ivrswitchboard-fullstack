@@ -25,10 +25,17 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 
 const WrapCol = ({ children }) => (
-  <div className="container pt-5"><div className="row"><div className="col-sm-2 border">
+  <div className="col-2 border">
     {children}
-  </div></div></div>
+  </div>
 );
+
+const WrapRow = ({ children }) => (
+  <div className="row">
+    {children}
+  </div>
+);
+
 
 const Container = ({ children }) => (
   <div className="container pt-5">
@@ -64,21 +71,29 @@ storiesOf('2. Times Page', module)
   .add("AlwaysOpen Option", () => <Container><TimesSectionOpeningOptions selected="alwaysOpen" onChange={action('changed')} /></Container>)
   .add("AlwaysClosed Option", () => <Container><TimesSectionOpeningOptions selected="alwaysClosed" onChange={action('changed')} /></Container>)
   .add("Monday Active", () => {
-    const dayData = { active: true, begin: "09:00", end: "17:00" }
+    const dayData1 = { active: true, begin: "09:00", end: "17:00" }
+    const dayData2 = { active: false, begin: "10:00", end: "18:00"}
+    const dayData3 = { active: true, begin: "10:00", end: "01:00" }
+    const dayData4 = { active: true, begin: "10:00", end: "01:00" , hidden: true}
     return (
-      <WrapCol>
-        <DayTimes groupId="workHours" day="mon" settings={dayData} onChange={action('clicked')} />
+      <Container><WrapRow>
+       <WrapCol>
+        <DayTimes groupId="workHours" day="mon" settings={dayData2} onChange={action('clicked')} />
+        <DayTimes groupId="workHours" day="mon" settings={dayData4} onChange={action('clicked')}  />
       </WrapCol>
+
+      <WrapCol>
+        <DayTimes groupId="workHours" day="tue" settings={dayData1} onChange={action('clicked')} />
+        <DayTimes groupId="workHours" day="tue" settings={dayData2} onChange={action('clicked')} />
+      </WrapCol>
+      <WrapCol>
+        <DayTimes groupId="workHours" day="wed" settings={dayData1} onChange={action('clicked')} />
+        <DayTimes groupId="workHours" day="wed" settings={dayData3} onChange={action('clicked')} />
+      </WrapCol></WrapRow>
+      </Container>
     )
   })
-  .add("Tuesday Inactive", () => {
-    const dayData = { active: false, begin: "10:00", end: "18:00" }
-    return (
-      <WrapCol>
-        <DayTimes groupId="openHours" day="tue" settings={dayData} onChange={action('clicked')} />
-      </WrapCol>
-    )
-  })
+  
   .add("Week Mon-Fri", () => {
     const schedule =       { openHours: { "mon": { active: true, begin: "09:00", end: "17:00" },
                                           "tue": { active: true, begin: "09:00", end: "17:00" },
