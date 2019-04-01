@@ -6,7 +6,7 @@ const TimesSectionWeek = (props) => {
     const label = { openHours: "Opening Hours", lunchHours: "Lunch Times"}
     
     const weekScheduleDisplay=props.schedule     
-    Object.keys(weekScheduleDisplay["lunchHours"]).map( key => { //adapt week schedule to include a hide flag for lunch hours openHours not active
+    Object.keys(weekScheduleDisplay["lunchHours"]).forEach( key => { //adapt week schedule to include a hide flag for lunch hours openHours not active
         weekScheduleDisplay["lunchHours"][key].hidden=!weekScheduleDisplay["openHours"][key].active })
 
     return( 
@@ -29,10 +29,10 @@ const TimesSectionWeek = (props) => {
 const Week = ({groupId, weekSchedule, onChange}) => {
     return(
         <div className="row" >
-        <div className="col" >
+        <div className="col d-none d-lg-block" >
         <div className="form-group" >&nbsp;</div>
-        <div className="form-group" ><input className="border-top-0 rounded-0 border-right-0 border-left-0 bg-transparent form-control" type="text" placeholder="Begins" disabled/></div>
-        <div className="form-group" ><input className="border-top-0 rounded-0 border-right-0 border-left-0 bg-transparent form-control" type="text" placeholder="Ends" disabled/></div></div> 
+        <div className="form-group" ><input className="border-top-0 rounded-0 border-right-0 border-left-0 bg-transparent form-control-sm form-control text-nowrap" type="text" placeholder="Begins" disabled/></div>
+        <div className="form-group" ><input className="border-top-0 rounded-0 border-right-0 border-left-0 bg-transparent form-control-sm form-control text-nowrap" type="text" placeholder="Ends" disabled/></div></div> 
             {Object.keys(weekSchedule).map( key => {
                 var daySchedule = weekSchedule[key]
                 return (

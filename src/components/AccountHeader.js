@@ -9,7 +9,7 @@ const AccountHeader = (props) => {
 
 return (
     <div className="row no-gutters px-1">
-    <div className="col-10 col-lg-11 col-md-11 ">
+    <div className="col-6 col-lg-7 col-md-7 ">
     <div className="text-primary">Switchboard
     <h2>{props.switchboardNumber}</h2>
     </div>

@@ -30,14 +30,14 @@ render(){
                         { value: "backToMenu", label: "Go back to Greeting"}]
     
     return (
-        <div className="row no-gutters">
-            <div className="col-2">
+        <div className="row">
+            <div className="col-1 text-center">
            <Bullet onClick={this.handleDeleteClick} index={this.props.index}/>
             </div>
-            <div className="col-10">
+            <div className="col-7">
                 <div className="form-row align-items-center">
                 <div className="col col-auto py-1">
-                    <select name={"action"+this.props.settings.action} className="form-control" onChange={this.handleChange} value={this.props.settings.action}>
+                    <select name="action" className="form-control" onChange={this.handleChange} value={this.props.settings.action}>
                     {selectOptions.map( (option) => <option key={option.value} value={option.value}>{option.label}</option>)}
                     </select>
                 </div>

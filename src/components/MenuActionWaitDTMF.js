@@ -26,7 +26,7 @@ const menuOptions = [ { value: "0", label: "0"},
         {menuOptions.map( menuOption => { 
         const buttonActive = menuOption.value in props.digitMenu
         return(
-        <button key={menuOption.value} value={!buttonActive} name={menuOption.value} type="button" className={buttonActive ? 'mb-1 ml-1 btn  btn-primary' : 'mb-1 ml-1 btn  btn-outline-secondary'    } onClick={handleClick} >{menuOption.label}</button>
+        <button key={menuOption.value} value={!buttonActive} name={menuOption.value} type="button" className={buttonActive ? 'mb-1 ml-1 btn btn-lg  btn-primary' : 'mb-1 ml-1 btn btn-lg  btn-outline-secondary'    } onClick={handleClick} >{menuOption.label}</button>
         )})}
         </div></div>
     )

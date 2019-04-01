@@ -1,0 +1,8 @@
+$theme-colors: (
+  "primary": rgb(1, 167, 245)
+);
+
+$grid-columns: 8 ;
+$grid-gutter-width: 2px ;
+
+@import "~bootstrap/scss/bootstrap";

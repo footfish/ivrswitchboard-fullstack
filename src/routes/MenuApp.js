@@ -80,11 +80,11 @@ export default class MenuApp extends Component {
     if (menuAdd) { //add to menu 
       this.setState( 
         state => state.menu[digit]= [{ action: "playRecording", recordingId: 0 }],
-        () => document.querySelector( '#section-'+digit ).scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"})
+        () => document.querySelector( '#section-'+digit ).scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"}) //scroll to added digit
       )
     }
     else { //remove from menu 
-      document.querySelector( '#section-'+digit ).scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"})
+//      document.querySelector( '#section-'+digit ).scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"})
       this.setState( state => delete state.menu[digit])
       }
     this.flagLocalChange()

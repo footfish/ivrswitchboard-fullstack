@@ -8,8 +8,8 @@ const DayTimes = (props) =>  {
   }
 
       return (
-            <div className="col" > 
-            <fieldset className={"text-center"+(props.settings.hidden && " d-none")}>
+            <div className="col-2 col-md-1 col-lg-1" > 
+            <fieldset className={"text-center "+(props.settings.hidden && " d-none")}>
             <div className="custom-control custom-checkbox form-group ">
             <input
               name="active"
@@ -20,12 +20,8 @@ const DayTimes = (props) =>  {
               onChange={handleChange} />
               <label className="text-capitalize custom-control-label" htmlFor={props.groupId+props.day+"active"}>{props.day}</label>
               </div>
-              { props.settings.active === true && 
-                <>
-                <div className="form-group"><input className="form-control " name={"begin"}  type="time" value={props.settings.begin} max={props.settings.end}  onChange={handleChange} required /></div>
-                <div className="form-group"><input className="form-control" name={"end"}  type="time" value={props.settings.end} min={props.settings.begin} onChange={handleChange} required /></div>
-                </>
-              } 
+                <div className="form-group"><input className="form-control form-control-sm" name={"begin"}  type="time" value={props.settings.active ? props.settings.begin:""} max={props.settings.end}  onChange={handleChange} disabled={!props.settings.active} required /></div>
+                <div className="form-group"><input className="form-control form-control-sm" name={"end"}  type="time" value={props.settings.active ? props.settings.end:""} min={props.settings.begin} onChange={handleChange} disabled={!props.settings.active} required /></div>
           </fieldset>
           </div>
       )
