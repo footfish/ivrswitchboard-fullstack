@@ -31,8 +31,8 @@ const Week = ({groupId, weekSchedule, onChange}) => {
         <div className="row" >
         <div className="col d-none d-lg-block" >
         <div className="form-group" >&nbsp;</div>
-        <div className="form-group" ><input className="border-top-0 rounded-0 border-right-0 border-left-0 bg-transparent form-control-sm form-control text-nowrap" type="text" placeholder="Begins" disabled/></div>
-        <div className="form-group" ><input className="border-top-0 rounded-0 border-right-0 border-left-0 bg-transparent form-control-sm form-control text-nowrap" type="text" placeholder="Ends" disabled/></div></div> 
+        <div className="form-group my-1" ><input className="border-top-0 rounded-0 border-right-0 border-left-0 bg-transparent form-control text-nowrap" type="text" placeholder="Begins" disabled/></div>
+        <div className="form-group my-1" ><input className="border-top-0 rounded-0 border-right-0 border-left-0 bg-transparent form-control text-nowrap" type="text" placeholder="Ends" disabled/></div></div> 
             {Object.keys(weekSchedule).map( key => {
                 var daySchedule = weekSchedule[key]
                 return (

@@ -68,7 +68,14 @@ export default class MenuApp extends Component {
   
   if (field === "action")
     {
-      this.setState( state => state.menu[digit][index] = actionPrimer[value],)
+      this.setState( state => {
+        if (value === "backToMenu" || value === "voicemailToEmail") { //these cases can't have further actions 
+          state.menu[digit].length = index+1  
+        }
+        state.menu[digit][index] = actionPrimer[value]
+        return state
+        }
+        )
     } else {
       this.setState( state => state.menu[digit][index][field] = value )
     }    
