@@ -8,7 +8,7 @@
     "server": "cd server && npm start",
     "start": "npm run server",
     "build": "cd client && npm run build",
-    "heroku-postbuild": "cd server && npm install --production && cd ../client && npm install --production && npm run build", 
+    "heroku-postbuild": "cd server && npm install --production && cd ../client && npm install --production && npm run build && mv ../server/default_recordings ./build/", 
     "dev": "concurrently --kill-others  \"npm run server\" \"npm run client\""
   },
   "repository": {
