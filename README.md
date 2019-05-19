@@ -7,7 +7,7 @@ This is a 'wrapper' repository for deployment of full stack to Heroku.
 Git subtree is used to import the separate [client](/footfish/ivrswitchboard-client) and [server](/footfish/ivrswitchboard-server) repositories.  
 This readme focuses on Heroko deployment, follow the links below to read more on client or server.  
 [Readme for client can be found here.](./client)  
-[Readmen for Server can be found here.](/server)  
+[Readme for server can be found here.](/server)  
 
 ## Demo 
 You can have a quick demo here (may be slow to spin up) [https://enigmatic-sea-61714.herokuapp.com/](https://enigmatic-sea-61714.herokuapp.com/)
