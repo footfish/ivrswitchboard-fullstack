@@ -10,7 +10,7 @@ This readme focuses on Heroko deployment, follow the links below to read more on
 [Readmen for Server can be found here.](/server)  
 
 ## Demo 
-You can have a quick demo here [https://enigmatic-sea-61714.herokuapp.com/](https://enigmatic-sea-61714.herokuapp.com/)
+You can have a quick demo here (may be slow to spin up) [https://enigmatic-sea-61714.herokuapp.com/](https://enigmatic-sea-61714.herokuapp.com/)
 
 email: dummy@email.com  
 password: dummy  
@@ -26,7 +26,8 @@ To deploy the full stack you will need to have a [heroku](https://www.heroku.com
 Clone this repo locally. Then run `npm install` to install all required dependencies
 
 ### Mongo Db 
-This application requires a mongo database, a free sandbox database is very straightforward to setup on heroku. *Note that heroku will require you to register a credit card to authenticate you *
+This application requires a mongo database. A free sandbox database is very straightforward to setup on heroku.  
+*Note that heroku will require you to authenticate by registering a credit card*
 
 ```
 heroku addons:create mongolab 
@@ -57,9 +58,10 @@ heroku config:set JWT_SECRET=put-any-secret-here
 
 ### Run local 
 The following will run the full stack on localhost installed with test data (proxying the api).
-You will need to make sure your server .env is correctly configured - [see readme for server](/server).  (You may install a local database or use the heroku database MONGODB_URI.) 
+You will need to make sure your server .env is correctly configured - [see readme for server](/server).  
+(*Note: You may install a local database or use the heroku database configured (MONGODB_URI).*) 
 
-Make sure you are in the code root folder (not ./server or ./client) then run;
+Make sure you are in the codes root folder (ie. folder above ./server and ./client) then run;
 ```
 npm run dev 
 ```
@@ -68,3 +70,14 @@ npm run dev
 ```
 git push heroku 
 ```
+
+### Reference Material
+-  Heroku Node.js Support - https://devcenter.heroku.com/articles/nodejs-support
+-  git-subtree(1) Manual Page - file:///C:/Program%20Files/Git/mingw64/share/doc/git-doc/git-subtree.html
+-  git subtrees: a tutorial - https://medium.com/@v/git-subtrees-a-tutorial-6ff568381844
+-  Deploying a React app with React-Router and an Express Backend - https://dev.to/nburgess/creating-a-react-app-with-react-router-and-an-express-backend-33l3
+-  How to Setup React and Node JS in a project - https://www.codementor.io/kakarganpat/how-to-setup-react-and-node-js-in-a-project-koxwqbssl
+-  Let’s build a full stack MongoDB, React, Node and Express (MERN) app - https://medium.com/javascript-in-plain-english/full-stack-mongodb-react-node-js-express-js-in-one-simple-app-6cc8ed6de274
+-  (Heroku) mLab MongoDB https://devcenter.heroku.com/articles/mongolab
+-  https://www.npmjs.com/package/esm
+
