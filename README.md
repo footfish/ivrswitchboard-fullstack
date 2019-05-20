@@ -15,6 +15,8 @@ This readme focuses on Heroko deployment, follow the links below to read more on
 [Readme for client can be found here.](./client)  
 [Readme for server can be found here.](/server)  
 
+![Screenshot](docimg/ivr-switchboard.gif "Animation showing feature overview")
+
 ## Demo 
 You can have a quick demo here (may be slow to spin up) [https://enigmatic-sea-61714.herokuapp.com/](https://enigmatic-sea-61714.herokuapp.com/)
 
