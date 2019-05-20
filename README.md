@@ -78,6 +78,23 @@ npm run dev
 ```
 git push heroku 
 ```
+**Notes on deploy**   
+The package.json contains a special 'heroku-postbuild' script for build & deploy which will;
+-  install the server dependencies
+-  install the client dependencies
+-  build the react client to be served from the server public folder
+-  copy default sound recordings to public folder 
+
+```
+ "scripts": {
+    "client": "cd client && npm start",
+    "server": "cd server && npm start",
+    "start": "npm run server",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "cd server && npm install --production && cd ../client && npm install --production && npm run build && mv ../server/default_recordings ./build/", 
+    "dev": "concurrently --kill-others  \"npm run server\" \"npm run client\""
+  },
+```
 
 ## Independent learning
 -  Heroku 
