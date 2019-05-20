@@ -3,7 +3,13 @@ Name: Kevin Brennan
 
 ## Overview.
 This a demonstration implementation of an IVR (Interactive Voice Response) switchboard full stack application using React and Node/Express with deployment to Heroku.  
-This is a 'wrapper' repository for deployment of full stack to Heroku.  
+
+### Features 
+-  Simple full stack deployment to Heroku.
+-  ReactJS front-end application which utilises react router, bootstrap & JWT authentication. 
+-  NodeJS back-end which utilises Express, Mongo db (mongoose), File streaming from Mongo GridFS (testing supertest, mocha).
+
+Note this is a 'wrapper' repository for deployment of the full stack to Heroku.  
 Git subtree is used to import the separate [client](/footfish/ivrswitchboard-client) and [server](/footfish/ivrswitchboard-server) repositories.  
 This readme focuses on Heroko deployment, follow the links below to read more on client or server.  
 [Readme for client can be found here.](./client)  
