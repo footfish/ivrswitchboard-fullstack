@@ -77,6 +77,10 @@ npm run dev
 git push heroku 
 ```
 
+## Independent learning
+-  Heroku 
+-  Git subtree 
+
 ### Reference Material
 -  Heroku Node.js Support - https://devcenter.heroku.com/articles/nodejs-support
 -  git-subtree(1) Manual Page - file:///C:/Program%20Files/Git/mingw64/share/doc/git-doc/git-subtree.html
