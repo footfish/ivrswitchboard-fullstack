@@ -10,7 +10,7 @@ This a demonstration implementation of an IVR (Interactive Voice Response) switc
 -  NodeJS back-end which utilises Express, Mongo db (mongoose), File streaming from Mongo GridFS (testing supertest, mocha).
 
 Note this is a 'wrapper' repository for deployment of the full stack to Heroku.  
-Git subtree is used to import the separate [client](/footfish/ivrswitchboard-client) and [server](/footfish/ivrswitchboard-server) repositories.  
+Git subtree is used to import the separate [client](https://github.com/footfish/ivrswitchboard-client) and [server](https://github.com/footfish/ivrswitchboard-server) repositories.  
 This readme focuses on Heroko deployment, follow the links below to read more on client or server.  
 [Readme for client can be found here.](./client)  
 [Readme for server can be found here.](/server)  
